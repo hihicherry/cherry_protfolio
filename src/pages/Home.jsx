@@ -54,18 +54,18 @@ function Home() {
 			</div>
 
 			{/* 像素風視窗邊框 */}
-			<div className="bg-retro-blue border-4 border-retro-purple rounded-lg p-1 w-full max-w-[90%] sm:max-w-lg fade-in z-10 relative transition-all duration-300">
-				<div className="bg-retro-purple text-white font-pixel text-sm px-2 py-1 flex justify-between">
-					<span>Welcome to my world!</span>
+			<div className="sparkle bg-retro-blue border-4 border-retro-purple rounded-lg p-1 w-full max-w-[90%] sm:max-w-lg fade-in z-10 relative transition-all duration-300">
+				<div className="bg-retro-purple text-white font-pixel text-sm px-2 py-1 flex justify-between items-center ">
+					<span className="truncate">
+						Welcome to my world!
+					</span>
 					<span className="flex gap-1">
-						<span className="border border-white px-1">🗕</span>
-						<span className="border border-white px-1">🗕</span>
 						<span className="border border-white px-1">✖</span>
 					</span>
 				</div>
 				<MainCard />
 			</div>
-			<NavBar />
+			<NavBar className="fade-in-delayed" />
 		</div>
 	);
 }

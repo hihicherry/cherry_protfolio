@@ -16,7 +16,7 @@ function MainCard(){
 
 	return (
 		<div
-			className={`bg-white border-4 ${styles.cardBorder} rounded-lg p-6 max-w-md w-full text-center shadow-xl mx-4 md:mx-0`}
+			className={`bg-white border-4 ${styles.cardBorder} rounded-lg p-6 max-w-md w-full text-center shadow-xl`}
 		>
 			{/* 像素風頭像 */}
 			<img
