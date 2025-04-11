@@ -1,10 +1,17 @@
 import { useEffect, useRef } from "react";
 import MainCard from "../components/MainCard";
 import NavBar from "../components/NavBar";
+import { useTheme } from "../contexts/ThemeContext";
 
 function Home() {
-	const lastTrailTime = useRef(0); // 記錄上一次生成軌跡的時間
-	const trailContainerRef = useRef(null); // 用於存放軌跡的容器
+	const { theme, themeStyles } = useTheme(); //記錄主題
+	const lastTrailTime = useRef(0); //記錄上一次生成軌跡的時間
+	const trailContainerRef = useRef(null); //用於存放軌跡的容器
+
+	useEffect(() => {
+		// 動態設置 body 的主題類別
+		document.body.className = theme;
+	}, [theme]);
 
 	// 追蹤滑鼠軌跡
 	useEffect(() => {
@@ -21,8 +28,7 @@ function Home() {
 			trail.style.left = `${e.clientX - 5}px`; // 調整偏移
 			trail.style.top = `${e.clientY - 5}px`;
 			document.body.appendChild(trail);
-			trail.style.backgroundColor =
-				colors[Math.floor(Math.random() * colors.length)];
+			trail.style.backgroundColor = themeStyles[theme].trail;
 			document.body.appendChild(trail);
 
 			// 移除軌跡元素
@@ -33,10 +39,10 @@ function Home() {
 
 		document.addEventListener("mousemove", handleMouseMove);
 		return () => document.removeEventListener("mousemove", handleMouseMove);
-	}, []);
+	}, [theme, themeStyles]);  //確保依賴 theme 和 themeStyles
 
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center p-4">
+		<div className="min-h-screen flex flex-col items-center justify-center p-0 sm:p-4 relative overflow-hidden">
 			{/* 背景層：用於存放軌跡和粒子 */}
 			<div ref={trailContainerRef} className="absolute inset-0 z-0">
 				{/* 背景粒子 */}
@@ -48,7 +54,7 @@ function Home() {
 			</div>
 
 			{/* 像素風視窗邊框 */}
-			<div className="bg-retro-blue border-4 border-retro-purple rounded-lg p-1 w-full max-w-lg">
+			<div className="bg-retro-blue border-4 border-retro-purple rounded-lg p-1 w-full max-w-[90%] sm:max-w-lg fade-in z-10 relative transition-all duration-300">
 				<div className="bg-retro-purple text-white font-pixel text-sm px-2 py-1 flex justify-between">
 					<span>Welcome to my world!</span>
 					<span className="flex gap-1">

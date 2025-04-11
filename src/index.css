@@ -14,7 +14,15 @@
 }
 
 body {
-  @apply bg-gradient-to-br from-pink-200 to-purple-300 min-h-screen flex items-center justify-center;
+  @apply  min-h-screen flex items-center justify-center transition-all duration-500;
+}
+
+body.pink-purple {
+  @apply bg-gradient-to-br from-pink-200 to-purple-300;
+}
+
+body.pink-blue {
+  @apply bg-gradient-to-br from-pink-200 to-blue-300;
 }
 
 .pixelated {
@@ -42,9 +50,18 @@ body {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 4px solid #ff99cc; /* 光標顏色 */
+  border-right-width: 4px;
   animation: typing 3s steps(30, end) 1s 1 normal both,
              blink 0.75s step-end infinite;
+}
+
+/* 根據主題動態設置打字機光標顏色 */
+body.pink-purple .typing-effect {
+  border-right-color: #ff99cc; /* retro-pink */
+}
+
+body.pink-blue .typing-effect {
+  border-right-color: #99ccff; /* retro-blue */
 }
 
 @keyframes float {
@@ -66,9 +83,17 @@ body {
   position: absolute;
   width: 8px;
   height: 8px;
-  background-color: #ff99cc; /* retro-pink */
   opacity: 0.8;
   animation: float 5s infinite ease-in-out;
+}
+
+/* 根據主題動態設置粒子顏色 */
+body.pink-purple .particle {
+  background-color: #ff99cc; /* retro-pink */
+}
+
+body.pink-blue .particle {
+  background-color: #99ccff; /* retro-blue */
 }
 
 .particle:nth-child(2) { animation-delay: 1s; }
@@ -81,7 +106,6 @@ body {
   position: absolute;
   width: 12px; /* 調整愛心大小 */
   height: 12px;
-  background-color: inherit; 
   opacity: 0.6;
   transform: rotate(45deg); /* 旋轉 45 度形成愛心 */
   animation: fadeOut 1s ease-in-out forwards;
@@ -94,9 +118,21 @@ body {
   position: absolute;
   width: 12px;
   height: 12px;
-  background-color: inherit; /* 與主元素相同顏色 */
   border-radius: 50%;
   pointer-events: none; 
+}
+
+/* 根據主題動態設置滑鼠軌跡顏色 */
+body.pink-purple .trail,
+body.pink-purple .trail::before,
+body.pink-purple .trail::after {
+  background-color: #cc99ff; /* retro-purple */
+}
+
+body.pink-blue .trail,
+body.pink-blue .trail::before,
+body.pink-blue .trail::after {
+  background-color: #ff99cc; /* retro-pink */
 }
 
 .trail::before {
