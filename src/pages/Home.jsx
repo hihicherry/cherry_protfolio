@@ -17,8 +17,8 @@ function Home() {
 	useEffect(() => {
 		const handleMouseMove = (e) => {
 			const now = Date.now();
-			// 每100毫秒生成一個軌跡
-			if (now - lastTrailTime.current < 100) return;
+			// 每80毫秒生成一個軌跡
+			if (now - lastTrailTime.current < 80) return;
 
 			lastTrailTime.current = now;
 
@@ -41,6 +41,8 @@ function Home() {
 		return () => document.removeEventListener("mousemove", handleMouseMove);
 	}, [theme, themeStyles]);  //確保依賴 theme 和 themeStyles
 
+	const styles = themeStyles[theme];
+
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center p-0 sm:p-4 relative overflow-hidden">
 			{/* 背景層：用於存放軌跡和粒子 */}
@@ -54,11 +56,9 @@ function Home() {
 			</div>
 
 			{/* 像素風視窗邊框 */}
-			<div className="sparkle bg-retro-blue border-4 border-retro-purple rounded-lg p-1 w-full max-w-[90%] sm:max-w-lg fade-in z-10 relative transition-all duration-300">
-				<div className="bg-retro-purple text-white font-pixel text-sm px-2 py-1 flex justify-between items-center ">
-					<span className="truncate">
-						Welcome to my world!
-					</span>
+			<div className={`sparkle ${styles.windowBg} border-4 border-grey-200 rounded-lg p-1 w-full max-w-[90%] sm:max-w-lg fade-in z-10 relative transition-all duration-300`}>
+				<div className={`${styles.titleBg} text-white font-pixel text-sm px-2 py-1 flex justify-between items-center`}>
+					<span className="truncate">Welcome to my world!</span>
 					<span className="flex gap-1">
 						<span className="border border-white px-1">✖</span>
 					</span>

@@ -24,6 +24,8 @@ export function ThemeProvider({ children }) {
 	// 定義每個主題的配色方案
 	const themeStyles = {
 		"pink-purple": {
+			titleBg: "bg-purple-to-pink", // 視窗標題列背景色
+            windowBg: "bg-retro-purple",
 			text: "text-retro-pink", // 名稱文字顏色
 			subText: "text-retro-purple", // 簡介文字顏色
 			buttonBg: "bg-retro-pink", // 按鈕背景色
@@ -36,6 +38,8 @@ export function ThemeProvider({ children }) {
 			trail: "#cc99ff", // 滑鼠軌跡顏色（retro-purple）
 		},
 		"pink-blue": {
+			titleBg: "bg-blue-to-pink", // 視窗標題列背景色
+            windowBg: "bg-retro-blue",
 			text: "text-retro-blue", // 名稱文字顏色
 			subText: "text-retro-pink", // 簡介文字顏色
 			buttonBg: "bg-retro-blue", // 按鈕背景色

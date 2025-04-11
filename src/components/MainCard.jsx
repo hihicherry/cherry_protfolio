@@ -26,7 +26,7 @@ function MainCard(){
 			/>
 			{/* 名稱 */}
 			<h1
-				className={`text-xl md:text-2xl mt-4 ${styles.text} font-pixel typing-effect`}
+				className={`text-md md:text-xl mt-4 ${styles.text} font-pixel typing-effect`}
 			>
 				Hi, I'm Cherry.
 			</h1>

@@ -14,16 +14,9 @@
 }
 
 body {
-  @apply  min-h-screen flex items-center justify-center transition-all duration-500;
+  @apply  min-h-screen flex items-center justify-center transition-all duration-500 bg-gradient-to-br from-pink-100 to-blue-100;
 }
 
-body.pink-purple {
-  @apply bg-gradient-to-br from-pink-200 to-purple-300;
-}
-
-body.pink-blue {
-  @apply bg-gradient-to-br from-pink-200 to-blue-300;
-}
 
 .pixelated {
   image-rendering: pixelated;
