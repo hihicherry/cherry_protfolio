@@ -6,6 +6,7 @@ import { useTheme } from "../contexts/ThemeContext";
 function Home() {
 	const { theme, themeStyles } = useTheme(); //記錄主題
 	const lastTrailTime = useRef(0); //記錄上一次生成軌跡的時間
+	const lastHeartTime = useRef(0); //紀錄上一次生成愛心的時間
 	const trailContainerRef = useRef(null); //用於存放軌跡的容器
 
 	useEffect(() => {
@@ -39,12 +40,66 @@ function Home() {
 
 		document.addEventListener("mousemove", handleMouseMove);
 		return () => document.removeEventListener("mousemove", handleMouseMove);
-	}, [theme, themeStyles]);  //確保依賴 theme 和 themeStyles
+	}, [theme, themeStyles]); //確保依賴 theme 和 themeStyles
+
+	//點擊or觸控生成愛心
+	useEffect(() => {
+		const handleClickOrTouch = (e) => {
+			const now = Date.now();
+			//愛心生成頻率 200ms一次
+			if (now - lastHeartTime < 200) return;
+
+			lastHeartTime.current = now;
+
+			//獲得點擊或是觸控的位置
+			const x = e.clientX || e.touches?.[0]?.clientX;
+			const y = e.clientY || e.touches?.[0]?.clientY;
+
+			if (!x || !y) return; // 確保有有效座標
+
+			const heart = document.createElement("div");
+			heart.className = "heart";
+			heart.style.left = `${x - 20}px`; // 偏移使愛心居中
+			heart.style.top = `${y - 20}px`;
+
+			// 內嵌 SVG 愛心
+			heart.innerHTML = `
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+		<defs>
+      		<filter id="pixelate">
+        	<feMorphology operator="dilate" radius="1" />
+      		</filter>
+    	</defs> 	
+		  stroke="${themeStyles[theme].trail || "#ff99cc"}"/>
+			stroke-width="3"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+			style="filter: url(#pixelate)"
+        </svg>
+      `;
+
+			document.body.appendChild(heart);
+
+			// 0.8秒後移除愛心
+			setTimeout(() => {
+				heart.remove();
+			}, 800);
+		};
+
+		document.addEventListener("click", handleClickOrTouch);
+		document.addEventListener("touchstart", handleClickOrTouch);
+
+		return () => {
+			document.removeEventListener("click", handleClickOrTouch);
+			document.removeEventListener("touchstart", handleClickOrTouch);
+		};
+	}, [theme, themeStyles]);
 
 	const styles = themeStyles[theme];
 
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center p-0 sm:p-4 relative overflow-hidden">
+		<div className="min-h-screen flex flex-col items-center justify-center p-2 md:p-4 relative overflow-hidden">
 			{/* 背景層：用於存放軌跡和粒子 */}
 			<div ref={trailContainerRef} className="absolute inset-0 z-0">
 				{/* 背景粒子 */}
@@ -56,16 +111,60 @@ function Home() {
 			</div>
 
 			{/* 像素風視窗邊框 */}
-			<div className={`sparkle ${styles.windowBg} border-4 border-grey-200 rounded-lg p-1 w-full max-w-[90%] sm:max-w-lg fade-in z-10 relative transition-all duration-300`}>
-				<div className={`${styles.titleBg} text-white font-pixel text-sm px-2 py-1 flex justify-between items-center`}>
+			<div
+				className={`sparkle ${styles.windowBg} border-4 border-grey-200 rounded-lg p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] fade-in z-10 relative transition-all duration-300`}
+			>
+				<div
+					className={`${styles.titleBg} text-white font-pixel text-sm px-2 py-1 flex justify-between items-center`}
+				>
 					<span className="truncate">Welcome to my world!</span>
 					<span className="flex gap-1">
-						<span className="border border-white px-1">✖</span>
+						<span className="border border-white p-1 flex items-center justify-center">
+							<svg
+								width="12"
+								height="12"
+								viewBox="0 0 16 16"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								className="text-white"
+							>
+								<path
+									d="M2 2L14 14M14 2L2 14"
+									stroke="currentColor"
+									strokeWidth="4"
+									strokeLinecap="miter"
+								/>
+							</svg>
+						</span>
 					</span>
 				</div>
 				<MainCard />
 			</div>
 			<NavBar className="fade-in-delayed" />
+			{/* 添加內聯 CSS 動畫 */}
+			<style jsx global>{`
+				.heart {
+					position: fixed;
+					pointer-events: none;
+					z-index: 100;
+					animation: heartAnimation 0.8s ease-out forwards;
+				}
+
+				@keyframes heartAnimation {
+					0% {
+						transform: scale(0.5);
+						opacity: 1;
+					}
+					50% {
+						transform: scale(1.2);
+						opacity: 0.8;
+					}
+					100% {
+						transform: scale(1);
+						opacity: 0;
+					}
+				}
+			`}</style>
 		</div>
 	);
 }

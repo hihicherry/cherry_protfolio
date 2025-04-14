@@ -16,17 +16,17 @@ function MainCard(){
 
 	return (
 		<div
-			className={`bg-white border-4 ${styles.cardBorder} rounded-lg p-6 max-w-md w-full text-center shadow-xl`}
+			className={`bg-white border-4 ${styles.cardBorder} rounded-lg p-4 sm:p-6 w-full max-w-full text-center shadow-xl`}
 		>
 			{/* 像素風頭像 */}
 			<img
 				src={avatarImage}
 				alt="avatar"
-				className={`mx-auto w-32 h-32 rounded-full border-4 ${styles.avatarBorder} shadow-md pixelated`}
+				className={`mx-auto w-24 sm:w-32 h-24 sm:h-32 rounded-full border-4 ${styles.avatarBorder} shadow-md pixelated`}
 			/>
 			{/* 名稱 */}
 			<h1
-				className={`text-md md:text-xl mt-4 ${styles.text} font-pixel typing-effect`}
+				className={`text-base sm:text-lg md:text-xl mt-4 ${styles.text} font-pixel typing-effect`}
 			>
 				Hi, I'm Cherry.
 			</h1>
@@ -39,7 +39,7 @@ function MainCard(){
 			{/* 互動按鈕 */}
 			<button
 				onClick={handleClick}
-				className={`mt-6 px-6 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg transition-all duration-300 relative overflow-hidden group font-pixel text-sm hover:scale-105`}
+				className={`mt-6 px-4 sm:px-6 py-1 sm:py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg transition-all duration-300 relative overflow-hidden group font-pixel text-xs sm:text-sm hover:scale-105`}
 			>
 				<span
 					className={`${
