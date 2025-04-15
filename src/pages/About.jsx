@@ -1,3 +1,5 @@
+
+
 function About() {
 	return (
 		<div className="text-center text-white font-pixel">
