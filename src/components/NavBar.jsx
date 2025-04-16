@@ -8,7 +8,7 @@ function NavBar({ className }) {
 
 	return (
 		<div
-			className={`fixed bottom-4 flex flex-col md:flex-row gap-2 ${className}`}
+			className={`fixed bottom-4 flex flex-col md:flex-row gap-2 ${className} z-20`}
 		>
 			{/* 首頁按鈕 */}
 			<NavLink
@@ -48,10 +48,11 @@ function NavBar({ className }) {
 				</svg>
 			</NavLink>
 
+			{/* 其他按鈕於螢幕大小為手機時隱藏 */}
 			<NavLink
 				to="/cherry_protfolio/about"
 				className={({ isActive }) =>
-					`px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
+					`hidden sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
 				}
 			>
 				關於我
@@ -59,7 +60,7 @@ function NavBar({ className }) {
 			<NavLink
 				to="/cherry_protfolio/projects"
 				className={({ isActive }) =>
-					`px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
+					`hidden sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
 				}
 			>
 				我的作品
@@ -67,7 +68,7 @@ function NavBar({ className }) {
 			<NavLink
 				to="/cherry_protfolio/contact"
 				className={({ isActive }) =>
-					`px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
+					`hidden sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
 				}
 			>
 				聯絡我
