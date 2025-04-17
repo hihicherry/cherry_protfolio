@@ -114,21 +114,21 @@ function Home() {
 
 			{/* 像素風視窗邊框 */}
 			<div
-				className={`sparkle ${styles.windowBg} border-4 border-black rounded-lg p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] fade-in z-10 relative transition-all duration-300`}
+				className={`sparkle ${styles.windowBg} border-2 ${styles.windowBorder} rounded-md p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] fade-in z-10 relative transition-all duration-300`}
 			>
 				<div
-					className={`${styles.titleBg} text-white font-pixel text-sm px-2 py-1 flex justify-between items-center`}
+					className={`${styles.titleBg} border-2 ${styles.windowBorder} text-indigo-700 font-pixel text-sm px-2 py-1 flex justify-between items-center`}
 				>
 					<span className="truncate">Welcome to my world!</span>
 					<span className="flex gap-1">
-						<span className="border border-white p-1 flex items-center justify-center">
+						<span className="border border-indigo-700 p-1 flex items-center justify-center">
 							<svg
 								width="12"
 								height="12"
 								viewBox="0 0 16 16"
 								fill="none"
 								xmlns="http://www.w3.org/2000/svg"
-								className="text-white"
+								className="text-indigo-700"
 							>
 								<path
 									d="M2 2L14 14M14 2L2 14"

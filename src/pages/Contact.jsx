@@ -221,22 +221,22 @@ function Contact() {
 
 			{/* Email 視窗 */}
 			<div
-				className={`sparkle ${styles.windowBg} border-4 border-black rounded-lg p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] max-h-[70vh] fade-in z-10 relative transition-all duration-300`}
+				className={`sparkle ${styles.windowBg} border-2 ${styles.windowBorder} rounded-lg p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] max-h-[70vh] fade-in z-10 relative transition-all duration-300`}
 			>
 				{/* 標題欄 */}
 				<div
-					className={`${styles.titleBg} bg-gradient-to-r from-pink-300 to-purple-300 text-white font-pixel text-sm px-2 py-1 flex justify-between items-center`}
+					className={`${styles.titleBg} border-2 ${styles.windowBorder} text-indigo-700 font-pixel text-sm px-2 py-1 flex justify-between items-center`}
 				>
-					<span className="truncate">Contact Cherry</span>
+					<span className="truncate">To: Cherry</span>
 					<span className="flex gap-1">
-						<span className="border border-white p-1 flex items-center justify-center">
+						<span className="border border-indigo-700 p-1 flex items-center justify-center">
 							<svg
 								width="12"
 								height="12"
 								viewBox="0 0 16 16"
 								fill="none"
 								xmlns="<http://www.w3.org/2000/svg>"
-								className="text-white"
+								className="text-indigo-700"
 							>
 								<path
 									d="M2 2L14 14M14 2L2 14"
@@ -250,10 +250,12 @@ function Contact() {
 				</div>
 
 				{/* 內容 */}
-				<div className="p-4 bg-white">
+				<div className={`p-4 bg-white border-2 ${styles.cardBorder}`}>
 					{/* 聯繫資訊 */}
 					<div className="mb-2 flex flex-col md:flex-row gap-2">
-						<div className="flex items-center gap-2 border-2 border-black rounded-md p-2 bg-pink-50">
+						<div
+							className={`flex items-center gap-2 border-2 ${styles.cardBorder} rounded-sm p-2 bg-pink-50`}
+						>
 							<svg
 								width="24"
 								height="24"
@@ -270,13 +272,15 @@ function Contact() {
 							</svg>
 							<a
 								href={`mailto:${contactInfo.email}`}
-								className="font-pixel text-xs text-gray-700 hover:text-pink-500 transition-colors"
+								className="font-pixel text-xs text-gray-500 hover:text-pink-500 transition-colors"
 								title="寄email給我"
 							>
 								Gmail/bubibuuu
 							</a>
 						</div>
-						<div className="flex items-center gap-2 border-2 border-black rounded-md p-2 bg-purple-50">
+						<div
+							className={`flex items-center gap-2 border-2 ${styles.cardBorder} rounded-sm p-2 bg-purple-50`}
+						>
 							<svg
 								width="24"
 								height="24"
@@ -294,7 +298,7 @@ function Contact() {
 								href={contactInfo.github}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="font-pixel text-xs text-gray-700 hover:text-purple-500 transition-colors"
+								className="font-pixel text-xs text-gray-500 hover:text-purple-500 transition-colors"
 								title="拜訪我的GitHub"
 							>
 								github/hihicherry
@@ -312,7 +316,11 @@ function Contact() {
 							name="name"
 							value={formData.name}
 							onChange={handleChange}
-							className={`w-full border-2 border-black rounded-md p-1 font-cubic text-sm focus:outline-none focus:border-pink-300 hover:animate-pulse ${
+							className={`w-full border-2 ${
+								styles.cardBorder
+							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+								styles.textareaFocusBorder
+							} hover:animate-pulse ${
 								errors.name ? "border-red-500" : ""
 							}`}
 							aria-label="請輸入你的姓名"
@@ -332,7 +340,11 @@ function Contact() {
 							name="email"
 							value={formData.email}
 							onChange={handleChange}
-							className={`w-full border-2 border-black rounded-md p-1 font-cubic text-sm focus:outline-none focus:border-pink-300 hover:animate-pulse ${
+							className={`w-full border-2 ${
+								styles.cardBorder
+							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+								styles.textareaFocusBorder
+							} hover:animate-pulse ${
 								errors.email ? "border-red-500" : ""
 							}`}
 							aria-label="請輸入你的電子郵件地址"
@@ -353,7 +365,11 @@ function Contact() {
 							onChange={handleChange}
 							rows="4"
 							maxLength="500"
-							className={`w-full border-2 border-black rounded-md p-1 font-cubic text-sm focus:outline-none focus:border-pink-300 hover:animate-pulse ${
+							className={`w-full border-2 ${
+								styles.cardBorder
+							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+								styles.textareaFocusBorder
+							} hover:animate-pulse ${
 								errors.message ? "border-red-500" : ""
 							}`}
 							aria-label="請輸入你的訊息"
@@ -367,7 +383,7 @@ function Contact() {
 					<div className="flex gap-2">
 						<button
 							onClick={handleSubmit}
-							className={`px-4 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-black rounded-md font-cubic text-sm transition-all hover:scale-110 hover:animate-flicker`}
+							className={`px-4 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker`}
 							title="Send message"
 							aria-label="傳送"
 						>
@@ -375,7 +391,7 @@ function Contact() {
 						</button>
 						<button
 							onClick={handleClear}
-							className={`px-4 py-1 bg-red-100 hover:bg-red-200 border-2 border-black rounded-md font-cubic text-sm transition-all hover:scale-110`}
+							className={`px-4 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110`}
 							title="Clear form"
 							aria-label="清除"
 						>

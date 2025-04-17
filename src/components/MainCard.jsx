@@ -16,7 +16,7 @@ function MainCard(){
 
 	return (
 		<div
-			className={`bg-white border-4 ${styles.cardBorder} rounded-lg p-4 sm:p-6 w-full max-w-full text-center shadow-xl`}
+			className={`bg-white border-2 ${styles.cardBorder} rounded-sm p-4 sm:p-6 w-full max-w-full text-center shadow-xl`}
 		>
 			{/* 像素風頭像 */}
 			<img
@@ -39,7 +39,7 @@ function MainCard(){
 			{/* 互動按鈕 */}
 			<button
 				onClick={handleClick}
-				className={`mt-6 px-4 sm:px-6 py-1 sm:py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg transition-all duration-300 relative overflow-hidden group font-pixel text-xs sm:text-sm hover:scale-105`}
+				className={`mt-6 px-4 sm:px-6 py-1 sm:py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm transition-all duration-300 relative overflow-hidden group font-pixel text-xs sm:text-sm hover:scale-105 hover:animate-flicker`}
 			>
 				<span
 					className={`${

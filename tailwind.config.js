@@ -15,6 +15,8 @@ export default {
 				"retro-pink": "#ff99cc", // 自定義粉色
 				"retro-purple": "#cc99ff", // 自定義紫色
 				"retro-blue": "#99ccff", // 自定義藍色
+				"retro-softpink": "#fae6f0",
+				"retro-softblue": "#e6f7ff",
 			},
 		},
 	},

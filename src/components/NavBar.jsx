@@ -16,9 +16,7 @@ function NavBar({ className }) {
 				className={({ isActive }) =>
 					`p-2 ${styles.buttonBg} ${
 						isActive ? "bg-pink-300" : styles.buttonHoverBg
-					} border-2 ${
-						styles.buttonBorder
-					} rounded-lg flex items-center justify-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
+					} border-2 border-e-violet-400 border-b-violet-400 rounded-sm flex items-center justify-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
 				}
 				title="回到首頁"
 				aria-label="回到首頁"
@@ -34,7 +32,7 @@ function NavBar({ className }) {
 					<path
 						d="M4 12H3V20H9V14H15V20H21V12H20M12 3L3 10H6V11H18V10H21L12 3Z"
 						fill="currentColor"
-						stroke="#fff"
+						stroke="indigo-700"
 						strokeWidth="2"
 						strokeLinecap="square"
 						strokeLinejoin="miter"
@@ -52,7 +50,7 @@ function NavBar({ className }) {
 			<NavLink
 				to="/cherry_protfolio/about"
 				className={({ isActive }) =>
-					`hidden sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
+					`sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
 				}
 			>
 				關於我
@@ -60,7 +58,7 @@ function NavBar({ className }) {
 			<NavLink
 				to="/cherry_protfolio/projects"
 				className={({ isActive }) =>
-					`hidden sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
+					`sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
 				}
 			>
 				我的作品
@@ -68,7 +66,7 @@ function NavBar({ className }) {
 			<NavLink
 				to="/cherry_protfolio/contact"
 				className={({ isActive }) =>
-					`hidden sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 ${styles.buttonBorder} rounded-lg ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1`
+					`sm:flex px-4 py-2 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm ${styles.buttonText} font-cubic text-sm text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
 				}
 			>
 				聯絡我
