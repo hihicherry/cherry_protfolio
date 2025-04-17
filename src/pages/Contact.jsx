@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import NavBar from "../components/NavBar";
+import Heart from "../components/Heart";
 import emailjs from "@emailjs/browser";
 
 function Contact() {
@@ -8,6 +9,7 @@ function Contact() {
 	const lastTrailTime = useRef(0);
 	const lastHeartTime = useRef(0);
 	const trailContainerRef = useRef(null);
+	const [hearts, setHearts] = useState([]); //管理愛心動畫
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
@@ -15,6 +17,7 @@ function Contact() {
 	});
 	const [errors, setErrors] = useState({});
 	const [submitted, setSubmitted] = useState(false);
+	const [envelopes, setEnvelopes] = useState([]);  //信封動畫
 
 	//個人聯繫資訊
 	const contactInfo = {
@@ -24,6 +27,9 @@ function Contact() {
 
 	// 滑鼠軌跡
 	useEffect(() => {
+		const maxTrails = 20; //控制元素生成數量
+		const trails = [];
+
 		const handleMouseMove = (e) => {
 			const now = Date.now();
 			if (now - lastTrailTime.current < 80) return;
@@ -36,9 +42,18 @@ function Contact() {
 			trail.style.top = `${e.clientY - 5}px`;
 			trail.style.backgroundColor = themeStyles[theme].trail || "#ff99cc";
 			document.body.appendChild(trail);
+			trails.push(trail);
+
+			//檢查軌跡是否超過上限，超過則刪除最早的
+			if (trails.length > maxTrails) {
+				const oldTrail = trails.shift();
+				oldTrail.remove();
+			}
 
 			setTimeout(() => {
 				trail.remove();
+				const index = trails.indexOf(trail);
+				if (index !== -1) trails.splice(index, 1);
 			}, 1000);
 		};
 
@@ -52,7 +67,6 @@ function Contact() {
 			const now = Date.now();
 			//愛心生成頻率 200ms一次
 			if (now - lastHeartTime < 200) return;
-
 			lastHeartTime.current = now;
 
 			//獲得點擊或是觸控的位置
@@ -61,36 +75,11 @@ function Contact() {
 
 			if (!x || !y) return; // 確保有有效座標
 
-			const heart = document.createElement("div");
-			heart.className = "heart";
-			heart.style.left = `${x - 18}px`; // 偏移使愛心居中
-			heart.style.top = `${y - 18}px`;
-
-			// 內嵌 SVG 愛心
-			heart.innerHTML = `
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            stroke="${themeStyles[theme].trail || "#ff99cc"}"
-            stroke-width="2"
-            stroke-linecap="square"
-            stroke-linejoin="miter"
-            style="filter: url(#pixelate)"
-          />
-          <defs>
-            <filter id="pixelate">
-              <feMorphology operator="dilate" radius="1" />
-            </filter>
-          </defs>
-        </svg>
-      `;
-
-			document.body.appendChild(heart);
-
-			// 0.8秒後移除愛心
-			setTimeout(() => {
-				heart.remove();
-			}, 800);
+			const id = Date.now();
+			setHearts((prev) => [
+				...prev,
+				{ id, x, y, color: themeStyles[theme].trail || "#ff99cc" },
+			]);
 		};
 
 		document.addEventListener("click", handleClickOrTouch);
@@ -101,6 +90,11 @@ function Contact() {
 			document.removeEventListener("touchstart", handleClickOrTouch);
 		};
 	}, [theme, themeStyles]);
+
+	//確保愛心動畫結束後從狀態移除
+	const removeHeart = (id) => {
+		setHearts((prev) => prev.filter((heart) => heart.id !== id));
+	};
 
 	//表單處理
 	const handleChange = (e) => {
@@ -149,61 +143,63 @@ function Contact() {
 		//emailJS發送
 		emailjs
 			.send(
-				serviceId, 
-				templateId, 
+				serviceId,
+				templateId,
 				{
 					from_name: formData.name,
 					from_email: formData.email,
 					message: formData.message,
 					to_email: contactInfo.email, //我的email
 				},
-				publicKey 
+				publicKey
 			)
 			.then(() => {
 				setSubmitted(true);
 				setFormData({ name: "", email: "", message: "" });
 				setTimeout(() => setSubmitted(false), 3000);
 
-				// 觸發愛心動畫
+				// 提交成功生成三個愛心
 				const x = window.innerWidth / 2;
 				const y = window.innerHeight / 2;
 				for (let i = 0; i < 3; i++) {
-					const heart = document.createElement("div");
-					heart.className = "heart";
-					heart.style.left = `${x - 20 + i * 10}px`;
-					heart.style.top = `${y - 20}px`;
-					heart.innerHTML = `
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="<http://www.w3.org/2000/svg>">
-              <path
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                stroke="${themeStyles[theme].trail || "#ff99cc"}"
-                stroke-width="3"
-                stroke-linecap="square"
-                stroke-linejoin="miter"
-                style="filter: url(#pixelate)"
-              />
-              <defs>
-                <filter id="pixelate">
-                  <feMorphology operator="dilate" radius="1" />
-                </filter>
-              </defs>
-            </svg>
-          `;
-					document.body.appendChild(heart);
-					setTimeout(() => heart.remove(), 800);
+					const id = Date.now() + i;
+					setHearts((prev) => [
+						...prev,
+						{
+							id,
+							x: x - 20 + i * 10,
+							y,
+							color: themeStyles[theme].trail || "#ff99cc",
+						},
+					]);
 				}
+
+				//生成信封動畫
+				const envelopeId = Date.now();
+				setEnvelopes((prev) => [
+					...prev,
+					{
+						id: envelopeId,
+						x,
+						y,
+						color: themeStyles[theme].trail || "#ff99cc",
+					},
+				]);
 			})
 			.catch((error) => {
 				setErrors({
 					submit: "Failed to send message. Please try again.",
 				});
-				console.error("EmailJS error:", error);
 			});
 	};
 
 	const handleClear = () => {
 		setFormData({ name: "", email: "", message: "" });
 		setErrors({});
+	};
+
+	const removeEnvelope = (id) => {
+		setEnvelopes((prev) => prev.filter((envelope) => envelope.id !== id));
 	};
 
 	const styles = themeStyles[theme];
@@ -403,8 +399,8 @@ function Contact() {
 
 			{/* 提交成功提示 */}
 			{submitted && (
-				<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-100 border-4 border-black rounded-lg p-4 z-20 fade-in">
-					<p className="font-pixel text-sm text-center">
+				<div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-100 border-2 border-e-violet-400 border-b-violet-400 rounded-sm p-4 z-20 fade-in">
+					<p className="font-cubic text-sm text-center text-indigo-700">
 						{formData.name
 							? `${formData.name}, Cherry 已收到你的訊息！<3`
 							: "Cherry 已收到你的訊息！<3"}
@@ -413,6 +409,41 @@ function Contact() {
 			)}
 
 			<NavBar className="fade-in-delayed" />
+			{hearts.map((heart) => (
+				<Heart
+					key={heart.id}
+					x={heart.x}
+					y={heart.y}
+					color={heart.color}
+					onRemove={() => removeHeart(heart.id)}
+				/>
+			))}
+
+			{envelopes.map((envelope) => (
+				<div
+					key={envelope.id}
+					className="envelope fixed pointer-events-none z-[100]"
+					style={{
+						left: `${envelope.x - 20}px`,
+						top: `${envelope.y - 20}px`,
+					}}
+				>
+					<svg
+						width="40"
+						height="40"
+						viewBox="0 0 24 24"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							d="M4 4H20V16H4V4ZM4 8L12 13L20 8"
+							stroke={envelope.color}
+							strokeWidth="2"
+							strokeLinecap="square"
+						/>
+					</svg>
+				</div>
+			))}
 		</div>
 	);
 }

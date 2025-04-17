@@ -15,6 +15,20 @@
 
 body {
 	@apply min-h-screen flex items-center justify-center transition-all duration-500 bg-gradient-to-br from-pink-100 to-blue-100;
+  animation: gradientShift 20s ease infinite;
+}
+
+/*網頁背景動畫*/
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .pixelated {
@@ -45,6 +59,7 @@ body {
 	border-right-width: 4px;
 	animation: typing 3s steps(30, end) 1s 1 normal both,
 		blink 0.75s step-end infinite;
+  transition: border-right-color 0.3s ease;  /*添加過渡效果，平滑光標顏色變化*/
 }
 
 /* 根據主題動態設置打字機光標顏色 */
@@ -194,4 +209,22 @@ body.pink-blue .trail::after {
 		transform: scale(1);
 		opacity: 0;
 	}
+}
+
+/*信封動畫*/
+.envelope {
+  position: fixed;
+  z-index: 100;
+  animation: flyOut 1s ease-out forwards;
+}
+
+@keyframes flyOut {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100vw, -100vh);
+    opacity: 0;
+  }
 }

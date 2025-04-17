@@ -1,13 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 import MainCard from "../components/MainCard";
 import NavBar from "../components/NavBar";
-import { useTheme } from "../contexts/ThemeContext";
+import Heart from "../components/Heart";
+
 
 function Home() {
 	const { theme, themeStyles } = useTheme(); //記錄主題
 	const lastTrailTime = useRef(0); //記錄上一次生成軌跡的時間
 	const lastHeartTime = useRef(0); //紀錄上一次生成愛心的時間
 	const trailContainerRef = useRef(null); //用於存放軌跡的容器
+	const [hearts, setHearts] = useState([]); //管理愛心動畫
 
 	useEffect(() => {
 		// 動態設置 body 的主題類別
@@ -16,25 +19,34 @@ function Home() {
 
 	// 追蹤滑鼠軌跡
 	useEffect(() => {
+		const maxTrails = 20;  //控制元素生成數量
+		const trails = [];
+
 		const handleMouseMove = (e) => {
 			const now = Date.now();
 			// 每80毫秒生成一個軌跡
 			if (now - lastTrailTime.current < 80) return;
-
 			lastTrailTime.current = now;
 
-			const colors = ["#ff99cc", "#cc99ff"]; //隨機顏色
 			const trail = document.createElement("div");
 			trail.className = "trail";
 			trail.style.left = `${e.clientX - 5}px`; // 調整偏移
 			trail.style.top = `${e.clientY - 5}px`;
-			document.body.appendChild(trail);
 			trail.style.backgroundColor = themeStyles[theme].trail;
 			document.body.appendChild(trail);
+			trails.push(trail);
+
+			//檢查軌跡是否超過上限，超過則刪除最早的
+			if (trails.length > maxTrails) {
+				const oldTrail = trails.shift();
+				oldTrail.remove();
+			}
 
 			// 移除軌跡元素
 			setTimeout(() => {
 				trail.remove();
+				const index = trails.indexOf(trail);
+				if (index !== -1) trails.splice(index, 1);
 			}, 1000);
 		};
 
@@ -57,36 +69,11 @@ function Home() {
 
 			if (!x || !y) return; // 確保有有效座標
 
-			const heart = document.createElement("div");
-			heart.className = "heart";
-			heart.style.left = `${x - 18}px`; // 偏移使愛心居中
-			heart.style.top = `${y - 18}px`;
-
-			// 內嵌 SVG 愛心
-			heart.innerHTML = `
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            stroke="${themeStyles[theme].trail || "#ff99cc"}"
-            stroke-width="2"
-            stroke-linecap="square"
-            stroke-linejoin="miter"
-            style="filter: url(#pixelate)"
-          />
-          <defs>
-            <filter id="pixelate">
-              <feMorphology operator="dilate" radius="1" />
-            </filter>
-          </defs>
-        </svg>
-      `;
-
-			document.body.appendChild(heart);
-
-			// 0.8秒後移除愛心
-			setTimeout(() => {
-				heart.remove();
-			}, 800);
+			const id = Date.now(); //唯一id
+			setHearts((prev) => [
+				...prev,
+				{ id, x, y, color: themeStyles[theme].trail },
+			]);
 		};
 
 		document.addEventListener("click", handleClickOrTouch);
@@ -97,6 +84,11 @@ function Home() {
 			document.removeEventListener("touchstart", handleClickOrTouch);
 		};
 	}, [theme, themeStyles]);
+
+	//確保愛心動畫結束後從狀態移除
+	const removeHeart = (id) => {
+		setHearts((prev) => prev.filter((heart) => heart.id !== id));
+	};
 
 	const styles = themeStyles[theme];
 
@@ -143,7 +135,15 @@ function Home() {
 				<MainCard />
 			</div>
 			<NavBar className="fade-in-delayed" />
-			
+			{hearts.map((heart) => (
+				<Heart
+					key={heart.id}
+					x={heart.x}
+					y={heart.y}
+					color={heart.color}
+					onRemove={() => removeHeart(heart.id)}
+				/>
+			))}
 		</div>
 	);
 }
