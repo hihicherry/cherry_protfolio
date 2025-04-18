@@ -7,5 +7,7 @@ export default defineConfig({
 	base: "/cherry_protfolio/",
 	build: {
 		assetsInclude: ["**/*.woff2"], // cubic字型檔
+		outDir: "dist",
+		assetsDir: "assets",
 	},
 });

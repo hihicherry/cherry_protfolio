@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* 定義俐方體 11 號字體 */
 @font-face {
 	font-family: "Cubic";
-	src: url("/assets/fonts/Cubic_11.woff2") format("woff2");
+	src: url("/public/fonts/Cubic_11.woff2") format("woff2");
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
 	@apply min-h-screen flex items-center justify-center transition-all duration-500 bg-gradient-to-br from-pink-100 to-blue-100;
