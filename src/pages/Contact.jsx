@@ -322,7 +322,7 @@ function Contact() {
 							aria-label="請輸入你的姓名"
 						/>
 						{errors.name && (
-							<p className="text-red-500 font-pixel text-xs mt-1">
+							<p className="text-red-500 font-cubic text-xs mt-1">
 								{errors.name}
 							</p>
 						)}
@@ -346,7 +346,7 @@ function Contact() {
 							aria-label="請輸入你的電子郵件地址"
 						/>
 						{errors.email && (
-							<p className="text-red-500 font-pixel text-xs mt-1">
+							<p className="text-red-500 font-cubic text-xs mt-1">
 								{errors.email}
 							</p>
 						)}

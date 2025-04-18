@@ -93,7 +93,7 @@ function Home() {
 	const styles = themeStyles[theme];
 
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center p-2 md:p-4 relative overflow-hidden">
+		<div className="min-h-screen flex flex-col items-center justify-center p-2 xs:p-3 sm:p-4 relative overflow-auto">
 			{/* 背景層：用於存放軌跡和粒子 */}
 			<div ref={trailContainerRef} className="absolute inset-0 z-0">
 				{/* 背景粒子 */}
@@ -105,35 +105,8 @@ function Home() {
 			</div>
 
 			{/* 像素風視窗邊框 */}
-			<div
-				className={`sparkle ${styles.windowBg} border-2 ${styles.windowBorder} rounded-md p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] fade-in z-10 relative transition-all duration-300`}
-			>
-				<div
-					className={`${styles.titleBg} border-2 ${styles.windowBorder} text-indigo-700 font-pixel text-sm px-2 py-1 flex justify-between items-center`}
-				>
-					<span className="truncate">Welcome to my world!</span>
-					<span className="flex gap-1">
-						<span className="border border-indigo-700 p-1 flex items-center justify-center">
-							<svg
-								width="12"
-								height="12"
-								viewBox="0 0 16 16"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-								className="text-indigo-700"
-							>
-								<path
-									d="M2 2L14 14M14 2L2 14"
-									stroke="currentColor"
-									strokeWidth="4"
-									strokeLinecap="miter"
-								/>
-							</svg>
-						</span>
-					</span>
-				</div>
-				<MainCard />
-			</div>
+			<MainCard className="fade-in z-10 relative transition-all duration-300`}" />
+
 			<NavBar className="fade-in-delayed" />
 			{hearts.map((heart) => (
 				<Heart
