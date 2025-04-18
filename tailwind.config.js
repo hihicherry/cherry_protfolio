@@ -5,7 +5,7 @@ export default {
 		extend: {
 			fontFamily: {
 				pixel: ['"Press Start 2P"', "cursive"], // 像素風字體
-				cubic: ['"Cubic 11"', "sans-serif"], // 俐方體 11 號
+				cubic: ['"Cubic"', "sans-serif"], // 俐方體 11 號
 			},
 			backgroundImage: {
 				"purple-to-pink": "linear-gradient(to right, #cc99ff, #ff99cc)",
