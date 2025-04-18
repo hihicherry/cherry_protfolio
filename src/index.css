@@ -7,7 +7,7 @@
 /* 定義俐方體 11 號字體 */
 @font-face {
 	font-family: "Cubic";
-	src: url("./assets/fonts/Cubic_11.woff2") format("woff2");
+	src: url("/assets/fonts/Cubic_11.woff2") format("woff2");
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
