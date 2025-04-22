@@ -119,7 +119,26 @@ function About() {
 			</div>
 
 			{/* 關於我視窗 */}
-			<PixelWindow title="About Cherry" styles={styles}>
+			<PixelWindow
+				title="About Cherry"
+				styles={styles}
+				pageKey="about"
+				icon={
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 16 16"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+						className="text-pink-700"
+					>
+						<path
+							d="M8 14C8 14 14 10 14 6C14 2 10 2 8 4C6 2 2 2 2 6C2 10 8 14 8 14Z"
+							fill="currentColor"
+						/>
+					</svg>
+				}
+			>
 				{/* 介紹 */}
 				<div className="mb-4">
 					<h2 className="font-pixel text-base text-indigo-700 mb-2">
@@ -145,28 +164,31 @@ function About() {
 						<li>Git / GitHub</li>
 					</ul>
 				</div>
+				
+				{/* 彩蛋按鈕 - 置於內容區域右下角 */}
+          <button
+            className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10"
+            onClick={handleEasterEggClick}
+            title="點我有驚喜！"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-pink-700"
+            >
+              <path
+                d="M8 14C8 14 14 10 14 6C14 2 10 2 8 4C6 2 2 2 2 6C2 10 8 14 8 14Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        
+
 			</PixelWindow>
 
-			{/* 彩蛋按鈕 */}
-			<button
-				className="fixed bottom-16 right-4 p-2 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-20"
-				onClick={handleEasterEggClick}
-				title="點我有驚喜！"
-			>
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-					className="text-pink-500"
-				>
-					<path
-						d="M8 14C8 14 14 10 14 6C14 2 10 2 8 4C6 2 2 2 2 6C2 10 8 14 8 14Z"
-						fill="currentColor"
-					/>
-				</svg>
-			</button>
 
 			{/* 愛心動畫 */}
 			{hearts.map((heart) => (

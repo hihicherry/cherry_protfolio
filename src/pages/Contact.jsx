@@ -217,7 +217,28 @@ function Contact() {
 			</div>
 
 			{/* Email 視窗 */}
-			<PixelWindow title="To: Cherry" styles={styles} >
+			<PixelWindow
+				title="To: Cherry"
+				styles={styles}
+				pageKey="contact"
+				icon={
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 16 16"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+						className="text-pink-500"
+					>
+						<path
+							d="M2 2H14V12H2V2ZM2 5L8 8L14 5"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="square"
+						/>
+					</svg>
+				}
+			>
 				{/* 聯繫資訊 */}
 				<div className="mb-2 flex flex-col md:flex-row gap-2">
 					<div

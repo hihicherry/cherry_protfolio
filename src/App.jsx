@@ -4,24 +4,30 @@ import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { IconProvider } from "./contexts/IconContext";
 
 function App() {
   return (
 		<ThemeProvider>
-			<Router>
-				<Routes>
-					<Route path="/cherry_protfolio/" element={<Home />} />
-					<Route path="/cherry_protfolio/about" element={<About />} />
-					<Route
-						path="/cherry_protfolio/projects"
-						element={<Projects />}
-					/>
-					<Route
-						path="/cherry_protfolio/contact"
-						element={<Contact />}
-					/>
-				</Routes>
-			</Router>
+			<IconProvider>
+				<Router>
+					<Routes>
+						<Route path="/cherry_protfolio/" element={<Home />} />
+						<Route
+							path="/cherry_protfolio/about"
+							element={<About />}
+						/>
+						<Route
+							path="/cherry_protfolio/projects"
+							element={<Projects />}
+						/>
+						<Route
+							path="/cherry_protfolio/contact"
+							element={<Contact />}
+						/>
+					</Routes>
+				</Router>
+			</IconProvider>
 		</ThemeProvider>
   );
 }

@@ -1,7 +1,13 @@
 import { useState } from "react";
+import { useIcons } from "../contexts/IconContext";
 
-function PixelWindow ({ title, children, styles, windowClassName, onOpen }) {
+function PixelWindow ({ title, children, styles, windowClassName, onOpen, icon, pageKey }) {
 	const [isWindowOpen, setIsWindowOpen] = useState(true);
+    const { icons } = useIcons();
+    const { bottom, zIndex } = icons[pageKey] || {
+		bottom: "20rem",
+		zIndex: 20,
+	};
 
 	// 關閉視窗
 	const handleCloseWindow = () => {
@@ -60,22 +66,25 @@ function PixelWindow ({ title, children, styles, windowClassName, onOpen }) {
 			) : (
 				<button
 					className="fixed bottom-20 right-4 p-2 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-20"
+					style={{ bottom, zIndex }}
 					onClick={handleOpenWindow}
 					title={`開啟 ${title}`}
 				>
-					{icon || (<svg
-						width="16"
-						height="16"
-						viewBox="0 0 16 16"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						className="text-pink-400"
-					>
-						<path
-							d="M2 2H14V14H2V2ZM4 4V12H12V4H4Z"
-							fill="currentColor"
-						/>
-					</svg>)}
+					{icon || (
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 16 16"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							className="text-pink-400"
+						>
+							<path
+								d="M2 2H14V14H2V2ZM4 4V12H12V4H4Z"
+								fill="currentColor"
+							/>
+						</svg>
+					)}
 				</button>
 			)}
 		</>
