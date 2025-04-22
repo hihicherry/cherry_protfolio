@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import NavBar from "../components/NavBar";
+import PixelWindow from "../components/PixelWindow";
 import Heart from "../components/Heart";
 import emailjs from "@emailjs/browser";
 
@@ -188,7 +189,7 @@ function Contact() {
 			})
 			.catch((error) => {
 				setErrors({
-					submit: "Failed to send message. Please try again.",
+					submit: "訊息傳送失敗，請再試一次。",
 				});
 			});
 	};
@@ -216,186 +217,155 @@ function Contact() {
 			</div>
 
 			{/* Email 視窗 */}
-			<div
-				className={`sparkle ${styles.windowBg} border-2 ${styles.windowBorder} rounded-lg p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] max-h-[70vh] fade-in z-10 relative transition-all duration-300`}
-			>
-				{/* 標題欄 */}
-				<div
-					className={`${styles.titleBg} border-2 ${styles.windowBorder} text-indigo-700 font-pixel text-sm px-2 py-1 flex justify-between items-center`}
-				>
-					<span className="truncate">To: Cherry</span>
-					<span className="flex gap-1">
-						<span className="border border-indigo-700 p-1 flex items-center justify-center">
-							<svg
-								width="12"
-								height="12"
-								viewBox="0 0 16 16"
-								fill="none"
-								xmlns="<http://www.w3.org/2000/svg>"
-								className="text-indigo-700"
-							>
-								<path
-									d="M2 2L14 14M14 2L2 14"
-									stroke="currentColor"
-									strokeWidth="4"
-									strokeLinecap="miter"
-								/>
-							</svg>
-						</span>
-					</span>
+			<PixelWindow title="To: Cherry" styles={styles} >
+				{/* 聯繫資訊 */}
+				<div className="mb-2 flex flex-col md:flex-row gap-2">
+					<div
+						className={`flex items-center gap-1 border-2 ${styles.cardBorder} rounded-sm p-2 bg-pink-50 text-xs`}
+					>
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="<http://www.w3.org/2000/svg>"
+						>
+							<path
+								d="M4 4H20V16H4V4ZM4 8L12 13L20 8"
+								stroke="black"
+								strokeWidth="2"
+								strokeLinecap="square"
+							/>
+						</svg>
+						<a
+							href={`mailto:${contactInfo.email}`}
+							className="font-pixel text-xs text-gray-500 hover:text-pink-500 transition-colors"
+							title="寄email給我"
+						>
+							Gmail/bubibuuu
+						</a>
+					</div>
+					<div
+						className={`flex items-center gap-1 border-2 ${styles.cardBorder} rounded-sm p-2 bg-purple-50 text-xs`}
+					>
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="<http://www.w3.org/2000/svg>"
+						>
+							<path
+								d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 4C14.21 4 16 5.79 16 8C16 10.21 14.21 12 12 12C9.79 12 8 10.21 8 8C8 5.79 9.79 4 12 4ZM4 12C4 16.41 7.59 20 12 20C16.41 20 20 16.41 20 12C20 10.21 19.37 8.56 18.34 7.34C18.73 8.34 19 9.44 19 10.58C19 14.07 16.07 17 12.58 17C9.99 17 7.84 15.48 7.07 13.34C5.86 14.37 5 15.7 5 17C5 17.55 5.45 18 6 18H9C9 19.66 10.34 21 12 21C13.66 21 15 19.66 15 18H18C18.55 18 19 17.55 19 17C19 15.7 18.14 14.37 16.93 13.34C16.16 15.48 13.99 17 11.42 17C7.93 17 5 14.07 5 10.58C5 9.44 5.27 8.34 5.66 7.34C4.63 8.56 4 10.21 4 12Z"
+								stroke="black"
+								strokeWidth="2"
+							/>
+						</svg>
+						<a
+							href={contactInfo.github}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="font-pixel text-xs text-gray-500 hover:text-purple-500 transition-colors"
+							title="拜訪我的GitHub"
+						>
+							github/hihicherry
+						</a>
+					</div>
 				</div>
 
-				{/* 內容 */}
-				<div className={`p-4 bg-white border-2 ${styles.cardBorder}`}>
-					{/* 聯繫資訊 */}
-					<div className="mb-2 flex flex-col md:flex-row gap-2">
-						<div
-							className={`flex items-center gap-2 border-2 ${styles.cardBorder} rounded-sm p-2 bg-pink-50`}
-						>
-							<svg
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="<http://www.w3.org/2000/svg>"
-							>
-								<path
-									d="M4 4H20V16H4V4ZM4 8L12 13L20 8"
-									stroke="black"
-									strokeWidth="2"
-									strokeLinecap="square"
-								/>
-							</svg>
-							<a
-								href={`mailto:${contactInfo.email}`}
-								className="font-pixel text-xs text-gray-500 hover:text-pink-500 transition-colors"
-								title="寄email給我"
-							>
-								Gmail/bubibuuu
-							</a>
-						</div>
-						<div
-							className={`flex items-center gap-2 border-2 ${styles.cardBorder} rounded-sm p-2 bg-purple-50`}
-						>
-							<svg
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="<http://www.w3.org/2000/svg>"
-							>
-								<path
-									d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 4C14.21 4 16 5.79 16 8C16 10.21 14.21 12 12 12C9.79 12 8 10.21 8 8C8 5.79 9.79 4 12 4ZM4 12C4 16.41 7.59 20 12 20C16.41 20 20 16.41 20 12C20 10.21 19.37 8.56 18.34 7.34C18.73 8.34 19 9.44 19 10.58C19 14.07 16.07 17 12.58 17C9.99 17 7.84 15.48 7.07 13.34C5.86 14.37 5 15.7 5 17C5 17.55 5.45 18 6 18H9C9 19.66 10.34 21 12 21C13.66 21 15 19.66 15 18H18C18.55 18 19 17.55 19 17C19 15.7 18.14 14.37 16.93 13.34C16.16 15.48 13.99 17 11.42 17C7.93 17 5 14.07 5 10.58C5 9.44 5.27 8.34 5.66 7.34C4.63 8.56 4 10.21 4 12Z"
-									stroke="black"
-									strokeWidth="2"
-								/>
-							</svg>
-							<a
-								href={contactInfo.github}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="font-pixel text-xs text-gray-500 hover:text-purple-500 transition-colors"
-								title="拜訪我的GitHub"
-							>
-								github/hihicherry
-							</a>
-						</div>
-					</div>
-
-					{/* 留言表單 */}
-					<div className="mb-2">
-						<label className="font-cubic text-sm text-gray-700">
-							你的姓名:
-						</label>
-						<input
-							type="text"
-							name="name"
-							value={formData.name}
-							onChange={handleChange}
-							className={`w-full border-2 ${
-								styles.cardBorder
-							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
-								styles.textareaFocusBorder
-							} hover:animate-pulse ${
-								errors.name ? "border-red-500" : ""
-							}`}
-							aria-label="請輸入你的姓名"
-						/>
-						{errors.name && (
-							<p className="text-red-500 font-cubic text-xs mt-1">
-								{errors.name}
-							</p>
-						)}
-					</div>
-					<div className="mb-4">
-						<label className="font-cubic text-sm text-gray-700">
-							你的電子郵件地址:
-						</label>
-						<input
-							type="email"
-							name="email"
-							value={formData.email}
-							onChange={handleChange}
-							className={`w-full border-2 ${
-								styles.cardBorder
-							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
-								styles.textareaFocusBorder
-							} hover:animate-pulse ${
-								errors.email ? "border-red-500" : ""
-							}`}
-							aria-label="請輸入你的電子郵件地址"
-						/>
-						{errors.email && (
-							<p className="text-red-500 font-cubic text-xs mt-1">
-								{errors.email}
-							</p>
-						)}
-					</div>
-					<div className="mb-4">
-						<label className="font-cubic text-sm text-gray-700">
-							訊息:
-						</label>
-						<textarea
-							name="message"
-							value={formData.message}
-							onChange={handleChange}
-							rows="4"
-							maxLength="500"
-							className={`w-full border-2 ${
-								styles.cardBorder
-							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
-								styles.textareaFocusBorder
-							} hover:animate-pulse ${
-								errors.message ? "border-red-500" : ""
-							}`}
-							aria-label="請輸入你的訊息"
-						/>
-						{errors.message && (
-							<p className="text-red-500 font-cubic text-xs mt-1">
-								{errors.message}
-							</p>
-						)}
-					</div>
-					<div className="flex gap-2">
-						<button
-							onClick={handleSubmit}
-							className={`px-4 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker`}
-							title="Send message"
-							aria-label="傳送"
-						>
-							送出
-						</button>
-						<button
-							onClick={handleClear}
-							className={`px-4 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110`}
-							title="Clear form"
-							aria-label="清除"
-						>
-							清除
-						</button>
-					</div>
+				{/* 留言表單 */}
+				<div className="mb-2">
+					<label className="font-cubic text-sm text-gray-700">
+						你的姓名:
+					</label>
+					<input
+						type="text"
+						name="name"
+						value={formData.name}
+						onChange={handleChange}
+						className={`w-full border-2 ${
+							styles.cardBorder
+						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+							styles.textareaFocusBorder
+						} hover:animate-pulse ${
+							errors.name ? "border-red-500" : ""
+						}`}
+						aria-label="請輸入你的姓名"
+					/>
+					{errors.name && (
+						<p className="text-red-500 font-cubic text-xs mt-1">
+							{errors.name}
+						</p>
+					)}
 				</div>
-			</div>
+				<div className="mb-4">
+					<label className="font-cubic text-sm text-gray-700">
+						你的電子郵件地址:
+					</label>
+					<input
+						type="email"
+						name="email"
+						value={formData.email}
+						onChange={handleChange}
+						className={`w-full border-2 ${
+							styles.cardBorder
+						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+							styles.textareaFocusBorder
+						} hover:animate-pulse ${
+							errors.email ? "border-red-500" : ""
+						}`}
+						aria-label="請輸入你的電子郵件地址"
+					/>
+					{errors.email && (
+						<p className="text-red-500 font-cubic text-xs mt-1">
+							{errors.email}
+						</p>
+					)}
+				</div>
+				<div className="mb-4">
+					<label className="font-cubic text-sm text-gray-700">
+						訊息:
+					</label>
+					<textarea
+						name="message"
+						value={formData.message}
+						onChange={handleChange}
+						rows="4"
+						maxLength="500"
+						className={`w-full border-2 ${
+							styles.cardBorder
+						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+							styles.textareaFocusBorder
+						} hover:animate-pulse ${
+							errors.message ? "border-red-500" : ""
+						}`}
+						aria-label="請輸入你的訊息"
+					/>
+					{errors.message && (
+						<p className="text-red-500 font-cubic text-xs mt-1">
+							{errors.message}
+						</p>
+					)}
+				</div>
+				<div className="flex gap-2">
+					<button
+						onClick={handleSubmit}
+						className={`px-3 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker`}
+						title="Send message"
+						aria-label="傳送"
+					>
+						送出
+					</button>
+					<button
+						onClick={handleClear}
+						className={`px-3 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110`}
+						title="Clear form"
+						aria-label="清除"
+					>
+						清除
+					</button>
+				</div>
+			</PixelWindow>
 
 			{/* 提交成功提示 */}
 			{submitted && (

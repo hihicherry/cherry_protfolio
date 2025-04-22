@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
+import PixelWindow from "../components/PixelWindow";
 import NavBar from "../components/NavBar";
 import Heart from "../components/Heart";
 
@@ -90,7 +91,7 @@ function About() {
 		// 生成額外愛心
 		const x = window.innerWidth / 2;
 		const y = window.innerHeight / 2;
-		for (let i = 0; i < 2; i++) {
+		for (let i = 0; i < 3; i++) {
 			const id = Date.now() + i;
 			setHearts((prev) => [
 				...prev,
@@ -118,66 +119,54 @@ function About() {
 			</div>
 
 			{/* 關於我視窗 */}
-			<div
-				className={`sparkle ${styles.windowBg} border-2 ${styles.windowBorder} rounded-lg p-1 w-full max-w-[95%] md:max-w-lg min-w-[300px] max-h-[70vh] fade-in z-10 relative transition-all duration-300`}
+			<PixelWindow title="About Cherry" styles={styles}>
+				{/* 介紹 */}
+				<div className="mb-4">
+					<h2 className="font-pixel text-base text-indigo-700 mb-2">
+						嗨！我是Cherry
+					</h2>
+					<p className="font-cubic text-sm text-gray-700">
+						一個熱愛前端開發的初學者，正在探索 React 和 Tailwind CSS
+						的奇妙世界！
+						並努力打好JavaScript基礎，夢想打造一個充滿趣味的個人網站
+						💕
+					</p>
+				</div>
+
+				{/* 技能 */}
+				<div className="mb-4">
+					<h3 className="font-pixel text-sm text-indigo-700 mb-2">
+						技能
+					</h3>
+					<ul className="font-cubic text-sm text-gray-700 list-disc pl-5">
+						<li>HTML / CSS / JavaScript</li>
+						<li>React & Vite</li>
+						<li>Tailwind CSS</li>
+						<li>Git / GitHub</li>
+					</ul>
+				</div>
+			</PixelWindow>
+
+			{/* 彩蛋按鈕 */}
+			<button
+				className="fixed bottom-16 right-4 p-2 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-20"
+				onClick={handleEasterEggClick}
+				title="點我有驚喜！"
 			>
-				{/* 標題欄 */}
-				<div
-					className={`${styles.titleBg} border-2 ${styles.windowBorder} text-indigo-700 font-pixel text-sm px-2 py-1 flex justify-between items-center`}
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					className="text-pink-500"
 				>
-					<span className="truncate">About Cherry</span>
-					<span className="flex gap-1">
-						<span className="border border-indigo-700 p-1 flex items-center justify-center">
-							<svg
-								width="12"
-								height="12"
-								viewBox="0 0 16 16"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-								className="text-indigo-700"
-							>
-								<path
-									d="M2 2L14 14M14 2L2 14"
-									stroke="currentColor"
-									strokeWidth="4"
-									strokeLinecap="miter"
-								/>
-							</svg>
-						</span>
-					</span>
-				</div>
-
-				{/* 內容 */}
-				<div
-					className={`p-4 bg-white border-2 ${styles.cardBorder} overflow-y-auto max-h-[50vh]`}
-				>
-					{/* 介紹 */}
-					<div className="mb-4">
-						<h2 className="font-pixel text-base text-indigo-700 mb-2">
-							嗨！我是Cherry
-						</h2>
-						<p className="font-cubic text-sm text-gray-700">
-							一個熱愛前端開發的初學者，正在探索 React 和 Tailwind
-							CSS 的奇妙世界！
-							並努力打好JavaScript基礎，夢想打造一個充滿趣味的個人網站
-							💕
-						</p>
-					</div>
-
-					{/* 技能 */}
-					<div className="mb-4">
-						<h3 className="font-pixel text-sm text-indigo-700 mb-2">
-							技能
-						</h3>
-						<ul className="font-cubic text-sm text-gray-700 list-disc pl-5">
-							<li>HTML / CSS / JavaScript</li>
-							<li>React & Vite</li>
-							<li>Tailwind CSS</li>
-							<li>Git / GitHub</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+					<path
+						d="M8 14C8 14 14 10 14 6C14 2 10 2 8 4C6 2 2 2 2 6C2 10 8 14 8 14Z"
+						fill="currentColor"
+					/>
+				</svg>
+			</button>
 
 			{/* 愛心動畫 */}
 			{hearts.map((heart) => (
