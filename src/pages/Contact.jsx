@@ -228,7 +228,7 @@ function Contact() {
 						viewBox="0 0 16 16"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
-						className="text-pink-500"
+						className="text-pink-400"
 					>
 						<path
 							d="M2 2H14V12H2V2ZM2 5L8 8L14 5"

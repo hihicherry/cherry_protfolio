@@ -83,23 +83,40 @@ function About() {
 		setHearts((prev) => prev.filter((heart) => heart.id !== id));
 	};
 
-	// 彩蛋觸發
+	// 彩蛋觸發 - 煙火效果
 	const handleEasterEggClick = () => {
 		setShowEasterEgg(true);
 		setTimeout(() => setShowEasterEgg(false), 3000);
 
-		// 生成額外愛心
-		const x = window.innerWidth / 2;
-		const y = window.innerHeight / 2;
-		for (let i = 0; i < 3; i++) {
+		// 在視窗中央生成 12 個愛心，模擬煙火
+		const centerX = window.innerWidth / 2;
+		const centerY = window.innerHeight / 2;
+		const heartCount = 12;
+
+		for (let i = 0; i < heartCount; i++) {
 			const id = Date.now() + i;
+			// 隨機角度（0-360度）
+			const angle = (i / heartCount) * 360;
+			// 隨機距離（50-150px）
+			const distance = 50 + Math.random() * 100;
+			// 計算目標位置
+			const rad = (angle * Math.PI) / 180;
+			const targetX = centerX + distance * Math.cos(rad);
+			const targetY = centerY + distance * Math.sin(rad);
+			// 隨機旋轉角度
+			const rotation = Math.random() * 360;
+
 			setHearts((prev) => [
 				...prev,
 				{
 					id,
-					x: x - 10 + i * 20,
-					y,
+					x: centerX,
+					y: centerY,
+					targetX,
+					targetY,
+					rotation,
 					color: themeStyles[theme].trail || "#ff99cc",
+					isFirework: true, // 標記為煙火愛心
 				},
 			]);
 		}
@@ -130,7 +147,7 @@ function About() {
 						viewBox="0 0 16 16"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
-						className="text-pink-700"
+						className="text-pink-400"
 					>
 						<path
 							d="M8 14C8 14 14 10 14 6C14 2 10 2 8 4C6 2 2 2 2 6C2 10 8 14 8 14Z"
@@ -164,31 +181,25 @@ function About() {
 						<li>Git / GitHub</li>
 					</ul>
 				</div>
-				
+
 				{/* 彩蛋按鈕 - 置於內容區域右下角 */}
-          <button
-            className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10"
-            onClick={handleEasterEggClick}
-            title="點我有驚喜！"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-pink-700"
-            >
-              <path
-                d="M8 14C8 14 14 10 14 6C14 2 10 2 8 4C6 2 2 2 2 6C2 10 8 14 8 14Z"
-                fill="currentColor"
-              />
-            </svg>
-          </button>
-        
-
+				<button
+					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10"
+					onClick={handleEasterEggClick}
+					title="點我有驚喜！"
+				>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg"
+						className="text-pink-500"
+					>
+						<path d="M12 2L14.09 8.26L21 9.27L16 14.14L17.18 21.02L12 17.77L6.82 21.02L8 14.14L3 9.27L9.91 8.26L12 2Z" />
+					</svg>
+				</button>
 			</PixelWindow>
-
 
 			{/* 愛心動畫 */}
 			{hearts.map((heart) => (
@@ -196,7 +207,11 @@ function About() {
 					key={heart.id}
 					x={heart.x}
 					y={heart.y}
+					targetX={heart.targetX}
+					targetY={heart.targetY}
+					rotation={heart.rotation}
 					color={heart.color}
+					isFirework={heart.isFirework}
 					onRemove={() => removeHeart(heart.id)}
 				/>
 			))}
