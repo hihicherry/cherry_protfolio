@@ -12,6 +12,15 @@ function About() {
 	const [hearts, setHearts] = useState([]);
 	const [showEasterEgg, setShowEasterEgg] = useState(false);
 
+	// 技能資料
+	const skills = [
+		{ name: "HTML & CSS", level: 90 },
+		{ name: "JavaScript", level: 80 },
+		{ name: "React", level: 40 },
+		{ name: "Tailwind CSS", level: 70 },
+		{ name: "Git & GitHub", level: 60 },
+	];
+
 	// 設置主題
 	useEffect(() => {
 		document.body.className = theme;
@@ -156,37 +165,82 @@ function About() {
 					</svg>
 				}
 			>
-				{/* 介紹 */}
+				{/* 自我介紹 */}
 				<div className="mb-4">
 					<h2 className="font-pixel text-base text-indigo-700 mb-2">
-						嗨！我是Cherry
+						嗨！我是 Cherry 🍒
 					</h2>
 					<p className="font-cubic text-sm text-gray-700">
-						一個熱愛前端開發的初學者，正在探索 React 和 Tailwind CSS
-						的奇妙世界！
-						並努力打好JavaScript基礎，夢想打造一個充滿趣味的個人網站
-						💕
+						我是來自台灣的前端開發初學者，熱衷於打造充滿趣味的網頁體驗！目前專注於學習
+						React、Tailwind CSS 和
+						JavaScript，夢想成為能將美學與現代技術結合的開發者。我愛復古遊戲的
+						UI 設計（像是《Needy Streamer
+						Overload》！），也喜歡用粉色系和愛心動畫表達我的創意 💕
 					</p>
 				</div>
 
 				{/* 技能 */}
 				<div className="mb-4">
-					<h3 className="font-pixel text-sm text-indigo-700 mb-2">
-						技能
+					<h3 className="font-cubic text-sm text-indigo-700 mb-2">
+						技能狀態欄
+					</h3>
+					<div className="space-y-2">
+						{skills.map((skill) => (
+							<div
+								key={skill.name}
+								className="flex items-center gap-2"
+							>
+								<span className="font-cubic text-xs text-gray-700 w-24">
+									{skill.name}
+								</span>
+								<div className="flex-1 bg-gray-200 border-2 border-indigo-200 rounded-sm h-3">
+									<div
+										className={`bg-pink-300 h-full rounded-sm ${styles.cardBorder}`}
+										style={{ width: `${skill.level}%` }}
+									></div>
+								</div>
+								<span className="font-cubic text-xs text-gray-700">
+									{skill.level}%
+								</span>
+							</div>
+						))}
+					</div>
+				</div>
+
+				{/* 興趣與目標 */}
+				<div className="mb-4">
+					<h3 className="font-cubic text-sm text-indigo-700 mb-2">
+						關於我的小檔案
 					</h3>
 					<ul className="font-cubic text-sm text-gray-700 list-disc pl-5">
-						<li>HTML / CSS / JavaScript</li>
-						<li>React & Vite</li>
-						<li>Tailwind CSS</li>
-						<li>Git / GitHub</li>
+						<li>興趣：看漫畫/動畫/遊戲直播、聽音樂</li>
+						<li>靈感來源：復古像素風 UI、粉色系</li>
+						<li>目前目標：打造一個互動式像素風個人網站</li>
+						<li>
+							未來夢想：成為前端網頁開發者，設計好看又有趣的網頁！
+						</li>
 					</ul>
+				</div>
+
+				{/* 聯繫提示 */}
+				<div className="mb-4">
+					<p className="font-cubic text-sm text-gray-700">
+						有什麼想要問我的嗎？請到{" "}
+						<a
+							href="/cherry_protfolio/contact"
+							className="font-cubic text-s bg-pink-100 text-indigo-700 px-1.5 py-0.5 rounded-sm hover:underline"
+						>
+							聯絡我
+						</a>{" "}
+						留言吧！💌
+					</p>
 				</div>
 
 				{/* 彩蛋按鈕 - 置於內容區域右下角 */}
 				<button
 					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10"
 					onClick={handleEasterEggClick}
-					title="點我有驚喜！"
+					title="點我看愛心煙火！"
 				>
 					<svg
 						width="16"
