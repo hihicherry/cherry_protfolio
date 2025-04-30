@@ -8,21 +8,28 @@ import Heart from "../components/Heart";
 const projects = [
 	{
 		id: 1,
-		title: "像素畫生成器",
+		title: "電影查詢網站",
 		description:
-			"一個根據使用者輸入生成像素畫的網頁應用，使用 React 和 Canvas API 打造，支援自訂配色和分享功能。",
-		tech: ["React", "JavaScript", "Canvas", "Tailwind CSS"],
-		image: "/images/pixel-art-generator.png", // 請替換成實際圖片路徑
-		demoLink: "https://pixel-art-demo.example.com",
-		sourceLink: "https://github.com/hihicherry/pixel-art-generator",
+			"一個提供使用者查詢電影、電視劇資訊的網站，並提供「加入我的最愛」功能，支援本地儲存。",
+		tech: [
+			"React",
+			"Vite",
+			"JavaScript",
+			"Tailwind CSS",
+			"LocalStorage",
+			"TMDB API",
+		],
+		image: "../assets/movie-search-app.png",
+		demoLink: "https://hihicherry.github.io/movie-search-app/",
+		sourceLink: "https://github.com/hihicherry/movie-search-app",
 	},
 	{
 		id: 2,
 		title: "復古待辦清單",
 		description:
-			"一個帶有復古美學的待辦清單應用，支援本地儲存和動畫效果，適合快速管理任務。",
-		tech: ["React", "Vite", "Tailwind CSS", "LocalStorage"],
-		image: "/images/retro-todo-app.png", // 請替換成實際圖片路徑
+			"像素風待辦事項應用，支援拖放排序、本地儲存和響應式設計，融入愛心動畫提升互動性。",
+		tech: ["React", "Vite", "Tailwind CSS", "React DnD", "LocalStorage"],
+		image: "../assets/retro-todo-app.png",
 		demoLink: "https://retro-todo-demo.example.com",
 		sourceLink: "https://github.com/hihicherry/retro-todo-app",
 	},
@@ -32,7 +39,7 @@ const projects = [
 		description:
 			"一個集合多款像素風小遊戲的平台，使用 React 和 WebGL 實現流暢的遊戲體驗。",
 		tech: ["React", "WebGL", "JavaScript", "Tailwind CSS"],
-		image: "/images/mini-game-platform.png", // 請替換成實際圖片路徑
+		image: "/images/mini-game-platform.png",
 		demoLink: "https://mini-game-demo.example.com",
 		sourceLink: "https://github.com/hihicherry/mini-game-platform",
 	},
