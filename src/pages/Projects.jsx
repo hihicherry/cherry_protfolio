@@ -30,7 +30,7 @@ const projects = [
 			"像素風待辦事項應用，支援拖放排序、本地儲存和響應式設計，融入愛心動畫提升互動性。",
 		tech: ["React", "Vite", "Tailwind CSS", "React DnD", "LocalStorage"],
 		image: "../assets/retro-todo-app.png",
-		demoLink: "https://retro-todo-demo.example.com",
+		demoLink: "https://hihicherry.github.io/retro-todo-app/",
 		sourceLink: "https://github.com/hihicherry/retro-todo-app",
 	},
 	{
