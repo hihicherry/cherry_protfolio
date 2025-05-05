@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import Heart from "../components/Heart";
 import movieSearchAppImg from "/assets/movie-search-app.png";
 import retroTodoAppImg from "/assets/retro-todo-app.png";
+import movieDashboardImg from "/assets/movie-dashboard.png";
 
 // 專案資料（請替換成你的實際專案）
 const projects = [
@@ -37,13 +38,20 @@ const projects = [
 	},
 	{
 		id: 3,
-		title: "迷你遊戲平台",
+		title: "電影數據化儀表板",
 		description:
-			"一個集合多款像素風小遊戲的平台，使用 React 和 WebGL 實現流暢的遊戲體驗。",
-		tech: ["React", "WebGL", "JavaScript", "Tailwind CSS"],
-		image: "",
-		demoLink: "https://mini-game-demo.example.com",
-		sourceLink: "https://github.com/hihicherry/mini-game-platform",
+			"一個電影數據可視化儀表板，展示熱門電影的評分、類型和熱門度，支持深色模式切換、語言切換和響應式圖表設計。",
+		tech: [
+			"React",
+			"Vite",
+			"Tailwind CSS",
+			"@tanstack/react-query",
+			"Recharts",
+			"Axios",
+		],
+		image: movieDashboardImg,
+		demoLink: "https://movie-dashboard-sigma.vercel.app/",
+		sourceLink: "https://github.com/hihicherry/movie-dashboard",
 	},
 ];
 
