@@ -16,7 +16,7 @@ function About() {
 	const skills = [
 		{ name: "HTML & CSS", level: 90 },
 		{ name: "JavaScript", level: 80 },
-		{ name: "React", level: 40 },
+		{ name: "React", level: 60 },
 		{ name: "Tailwind CSS", level: 70 },
 		{ name: "Git & GitHub", level: 60 },
 	];

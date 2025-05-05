@@ -3,6 +3,8 @@ import { useTheme } from "../contexts/ThemeContext";
 import PixelWindow from "../components/PixelWindow";
 import NavBar from "../components/NavBar";
 import Heart from "../components/Heart";
+import movieSearchAppImg from "/assets/movie-search-app.png";
+import retroTodoAppImg from "/assets/retro-todo-app.png";
 
 // 專案資料（請替換成你的實際專案）
 const projects = [
@@ -19,7 +21,7 @@ const projects = [
 			"LocalStorage",
 			"TMDB API",
 		],
-		image: "../assets/movie-search-app.png",
+		image: movieSearchAppImg,
 		demoLink: "https://hihicherry.github.io/movie-search-app/",
 		sourceLink: "https://github.com/hihicherry/movie-search-app",
 	},
@@ -29,7 +31,7 @@ const projects = [
 		description:
 			"像素風待辦事項應用，支援拖放排序、本地儲存和響應式設計，融入愛心動畫提升互動性。",
 		tech: ["React", "Vite", "Tailwind CSS", "React DnD", "LocalStorage"],
-		image: "../assets/retro-todo-app.png",
+		image: retroTodoAppImg,
 		demoLink: "https://hihicherry.github.io/retro-todo-app/",
 		sourceLink: "https://github.com/hihicherry/retro-todo-app",
 	},
@@ -39,7 +41,7 @@ const projects = [
 		description:
 			"一個集合多款像素風小遊戲的平台，使用 React 和 WebGL 實現流暢的遊戲體驗。",
 		tech: ["React", "WebGL", "JavaScript", "Tailwind CSS"],
-		image: "/images/mini-game-platform.png",
+		image: "",
 		demoLink: "https://mini-game-demo.example.com",
 		sourceLink: "https://github.com/hihicherry/mini-game-platform",
 	},
