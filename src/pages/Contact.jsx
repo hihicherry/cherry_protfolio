@@ -396,6 +396,9 @@ function Contact() {
 							? `${formData.name}, Cherry 已收到你的訊息！<3`
 							: "Cherry 已收到你的訊息！<3"}
 					</p>
+					<p className="font-cubic text-sm text-center text-indigo-700">
+						請檢查你的郵箱以獲取訊息備份。
+					</p>
 				</div>
 			)}
 
