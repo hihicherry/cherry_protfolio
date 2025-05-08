@@ -9,8 +9,10 @@ function About() {
 	const lastTrailTime = useRef(0);
 	const lastHeartTime = useRef(0);
 	const trailContainerRef = useRef(null);
+	const skillBarsRef = useRef([]);
 	const [hearts, setHearts] = useState([]);
 	const [showEasterEgg, setShowEasterEgg] = useState(false);
+	const [animateBars, setAnimateBars] = useState(false);
 
 	// 技能資料
 	const skills = [
@@ -87,6 +89,25 @@ function About() {
 			document.removeEventListener("touchstart", handleClickOrTouch);
 		};
 	}, [theme, themeStyles]);
+
+	// 觸發進度條動畫
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					setAnimateBars(true);
+					observer.disconnect();
+				}
+			},
+			{ threshold: 0.5 }
+		);
+
+		if (skillBarsRef.current[0]) {
+			observer.observe(skillBarsRef.current[0]);
+		}
+
+		return () => observer.disconnect();
+	}, []);
 
 	const removeHeart = (id) => {
 		setHearts((prev) => prev.filter((heart) => heart.id !== id));
@@ -185,18 +206,30 @@ function About() {
 						技能狀態欄
 					</h3>
 					<div className="space-y-2">
-						{skills.map((skill) => (
+						{skills.map((skill, index) => (
 							<div
 								key={skill.name}
 								className="flex items-center gap-2"
+								ref={(el) => (skillBarsRef.current[index] = el)}
 							>
 								<span className="font-cubic text-xs text-gray-700 w-24">
 									{skill.name}
 								</span>
-								<div className="flex-1 bg-gray-200 border-2 border-indigo-200 rounded-sm h-3">
+								<div className="flex-1 bg-gray-200 border-2 border-indigo-200 rounded-sm h-3 overflow-hidden">
 									<div
-										className={`bg-pink-300 h-full rounded-sm ${styles.cardBorder}`}
-										style={{ width: `${skill.level}%` }}
+										className={`bg-pink-300 h-full rounded-sm ${
+											styles.cardBorder
+										} ${
+											animateBars
+												? "animate-retro-progress"
+												: ""
+										}`}
+										style={{
+											width: animateBars
+												? `${skill.level}%`
+												: "0%",
+											"--progress-width": `${skill.level}%`,
+										}}
 									></div>
 								</div>
 								<span className="font-cubic text-xs text-gray-700">

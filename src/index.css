@@ -15,20 +15,20 @@
 
 body {
 	@apply min-h-screen flex items-center justify-center transition-all duration-500 bg-gradient-to-br from-pink-100 to-blue-100;
-  animation: gradientShift 20s ease infinite;
+	animation: gradientShift 20s ease infinite;
 }
 
 /*網頁背景動畫*/
 @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 .pixelated {
@@ -59,7 +59,7 @@ body {
 	border-right-width: 4px;
 	animation: typing 3s steps(30, end) 1s 1 normal both,
 		blink 0.75s step-end infinite;
-  transition: border-right-color 0.3s ease;  /*添加過渡效果，平滑光標顏色變化*/
+	transition: border-right-color 0.3s ease; /*添加過渡效果，平滑光標顏色變化*/
 }
 
 /* 根據主題動態設置打字機光標顏色 */
@@ -186,7 +186,7 @@ body.pink-blue .trail::after {
 	animation: flicker 0.2s infinite !important;
 }
 .hover\:animate-flicker:hover {
-  animation: flicker 0.2s infinite;
+	animation: flicker 0.2s infinite;
 }
 
 .heart {
@@ -213,97 +213,135 @@ body.pink-blue .trail::after {
 
 /*信封動畫*/
 .envelope {
-  position: fixed;
-  z-index: 100;
-  animation: flyOut 1s ease-out forwards;
+	position: fixed;
+	z-index: 100;
+	animation: flyOut 1s ease-out forwards;
 }
 
 @keyframes flyOut {
-  0% {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(100vw, -100vh);
-    opacity: 0;
-  }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(100vw, -100vh);
+		opacity: 0;
+	}
 }
 
 /* 縮放動畫 */
 @keyframes shrink {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0.1);
+		opacity: 0;
+	}
 }
 
 @keyframes expand {
-  0% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+	0% {
+		transform: scale(0.1);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
 
-.animate-shrink { 
-	animation: shrink 0.5s ease-out forwards; 
+.animate-shrink {
+	animation: shrink 0.5s ease-out forwards;
 }
 
-.animate-expand { 
-	animation: expand 0.5s ease-out forwards; 
+.animate-expand {
+	animation: expand 0.5s ease-out forwards;
 }
 
 /* 脈動動畫 */
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
 }
 
 /* 閃爍動畫 */
 @keyframes flicker {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
-  }
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 .hover\:animate-flicker:hover {
-  animation: flicker 0.2s infinite;
+	animation: flicker 0.2s infinite;
 }
 
 /* 煙火愛心動畫 */
 .firework-heart {
-  position: fixed;
-  pointer-events: none;
-  z-index: 100;
-  animation: fireworks 1.2s ease-out forwards !important;
+	position: fixed;
+	pointer-events: none;
+	z-index: 100;
+	animation: fireworks 1.2s ease-out forwards !important;
 }
 
 @keyframes fireworks {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(0.5);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--target-x), var(--target-y)) rotate(var(--rotation)) scale(1.2);
-    opacity: 0;
-  }
+	0% {
+		transform: translate(0, 0) rotate(0deg) scale(0.5);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--target-x), var(--target-y))
+			rotate(var(--rotation)) scale(1.2);
+		opacity: 0;
+	}
+}
+
+/* 復古進度條動畫 */
+@keyframes retroProgress {
+	0% {
+		width: 0%;
+	}
+	80% {
+		width: var(--progress-width);
+	}
+	100% {
+		width: var(--progress-width);
+	}
+}
+
+.animate-retro-progress {
+	animation: retroProgress 1.5s steps(10, end) forwards;
+}
+
+.animate-retro-progress::after {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.3);
+	animation: progressFlicker 2s infinite 1.5s;
+}
+
+@keyframes progressFlicker {
+	0%,
+	100% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0.5;
+	}
 }
