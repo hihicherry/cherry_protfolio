@@ -28,7 +28,7 @@ function NavBar({ className }) {
 						className={({ isActive }) =>
 							`p-1 ${styles.buttonBg} ${
 								isActive ? "bg-pink-300" : styles.buttonHoverBg
-							} border-2 border-e-violet-400 border-b-violet-400 rounded-sm flex items-center justify-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-500`
+							} border-2 border-e-violet-400 border-b-violet-400 rounded-sm flex items-center justify-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300`
 						}
 						aria-current={
 							currentPath === link.to ? "page" : undefined
