@@ -1,9 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 
 function NavBar({ className }) {
 	const { theme, themeStyles } = useTheme();
 	const styles = themeStyles[theme];
+	const location = useLocation();
+	const currentPath = location.pathname;
+
+	//nav按鈕統一整理
+	const navLinks = [
+		{ to: "/cherry_protfolio/", label: "首頁", icon: "🏠" },
+		{ to: "/cherry_protfolio/about", label: "關於我", icon: "🍒" },
+		{ to: "/cherry_protfolio/projects", label: "我的作品", icon: "💻" },
+		{ to: "/cherry_protfolio/contact", label: "聯絡我", icon: "💌" },
+	];
 
 	return (
 		<div
@@ -11,83 +21,54 @@ function NavBar({ className }) {
 		>
 			{/* 選單容器：手機為 2x2 網格，大螢幕為水平排列 */}
 			<div className="grid grid-cols-2 gap-1 sm:flex sm:flex-row sm:flex-nowrap bg-transparent p-0 w-full transition-all duration-300 justify-center">
-				{/* 首頁按鈕 */}
-				<NavLink
-					to="/cherry_protfolio/"
-					className={({ isActive }) =>
-						`p-1 ${styles.buttonBg} ${
-							isActive ? "bg-pink-300" : styles.buttonHoverBg
-						} border-2 border-e-violet-400 border-b-violet-400 rounded-sm flex items-center justify-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
-					}
-					title="回到首頁"
-					aria-label="回到首頁"
-				>
-					<svg
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						className={`${styles.buttonText}`}
+				{navLinks.map((link) => (
+					<NavLink
+						key={link.to}
+						to={link.to}
+						className={({ isActive }) =>
+							`p-1 ${styles.buttonBg} ${
+								isActive ? "bg-pink-300" : styles.buttonHoverBg
+							} border-2 border-e-violet-400 border-b-violet-400 rounded-sm flex items-center justify-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-500`
+						}
+						aria-current={
+							currentPath === link.to ? "page" : undefined
+						}
+						aria-label={`導航到${link.label}頁面`}
+						title={`前往${link.label}`}
 					>
-						<path
-							d="M4 12H3V20H9V14H15V20H21V12H20M12 3L3 10H6V11H18V10H21L12 3Z"
-							fill="currentColor"
-							stroke="indigo-700"
-							strokeWidth="2"
-							strokeLinecap="square"
-							strokeLinejoin="miter"
-						/>
-						<path
-							d="M10 8L14 8"
-							stroke="#fff"
-							strokeWidth="2"
-							strokeLinecap="square"
-						/>
-					</svg>
-				</NavLink>
-
-				{/* 關於我按鈕 */}
-				<NavLink
-					to="/cherry_protfolio/about"
-					className={({ isActive }) =>
-						`px-4 py-1 ${styles.buttonBg} ${
-							isActive ? "bg-pink-300" : styles.buttonHoverBg
-						} border-2 border-e-violet-400 border-b-violet-400 rounded-sm ${
-							styles.buttonText
-						} font-cubic text-xs text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
-					}
-				>
-					關於我
-				</NavLink>
-
-				{/* 我的作品按鈕 */}
-				<NavLink
-					to="/cherry_protfolio/projects"
-					className={({ isActive }) =>
-						`px-4 py-1 ${styles.buttonBg} ${
-							isActive ? "bg-pink-300" : styles.buttonHoverBg
-						} border-2 border-e-violet-400 border-b-violet-400 rounded-sm ${
-							styles.buttonText
-						} font-cubic text-xs text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
-					}
-				>
-					我的作品
-				</NavLink>
-
-				{/* 聯絡我按鈕 */}
-				<NavLink
-					to="/cherry_protfolio/contact"
-					className={({ isActive }) =>
-						`px-4 py-1 ${styles.buttonBg} ${
-							isActive ? "bg-pink-300" : styles.buttonHoverBg
-						} border-2 border-e-violet-400 border-b-violet-400 rounded-sm ${
-							styles.buttonText
-						} font-cubic text-xs text-center transition-all hover:scale-110 hover:shadow-md hover:translate-x-1 hover:translate-y-1 hover:animate-flicker`
-					}
-				>
-					聯絡我
-				</NavLink>
+						{link.label === "首頁" ? (
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								className={`${styles.buttonText}`}
+							>
+								<path
+									d="M4 12H3V20H9V14H15V20H21V12H20M12 3L3 10H6V11H18V10H21L12 3Z"
+									fill="currentColor"
+									stroke="indigo-700"
+									strokeWidth="2"
+									strokeLinecap="square"
+									strokeLinejoin="miter"
+								/>
+								<path
+									d="M10 8L14 8"
+									stroke="#fff"
+									strokeWidth="2"
+									strokeLinecap="square"
+								/>
+							</svg>
+						) : (
+							<span
+								className={`px-2 py-1 ${styles.buttonText} font-cubic text-xs text-center`}
+							>
+								{link.label}
+							</span>
+						)}
+					</NavLink>
+				))}
 			</div>
 		</div>
 	);

@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { useIcons } from "../contexts/IconContext";
 
-function PixelWindow ({ title, children, styles, windowClassName, onOpen, icon, pageKey }) {
+function PixelWindow({
+	title,
+	children,
+	styles,
+	windowClassName,
+	onOpen,
+	icon,
+	pageKey,
+}) {
 	const [isWindowOpen, setIsWindowOpen] = useState(true);
-    const { icons } = useIcons();
-    const { bottom, zIndex } = icons[pageKey] || {
+	const { icons } = useIcons();
+	const { bottom, zIndex } = icons[pageKey] || {
 		bottom: "20rem",
 		zIndex: 20,
 	};
@@ -17,10 +25,10 @@ function PixelWindow ({ title, children, styles, windowClassName, onOpen, icon, 
 	// 開啟視窗
 	const handleOpenWindow = () => {
 		setIsWindowOpen(true);
-        onOpen?.();
+		onOpen?.();
 	};
 
-    return (
+	return (
 		<>
 			{isWindowOpen ? (
 				<div
@@ -33,8 +41,9 @@ function PixelWindow ({ title, children, styles, windowClassName, onOpen, icon, 
 						<span className="truncate">{title}</span>
 						<span className="flex gap-1">
 							<span
-								className="border border-indigo-700 p-1 flex items-center justify-center cursor-pointer hover:bg-pink-300 hover:animate-flicker"
+								className="border border-indigo-700 p-1 flex items-center justify-center cursor-pointer hover:bg-pink-300 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300"
 								onClick={handleCloseWindow}
+								aria-label={`關閉 ${title} 視窗`}
 								title="關閉視窗"
 							>
 								<svg
@@ -68,6 +77,8 @@ function PixelWindow ({ title, children, styles, windowClassName, onOpen, icon, 
 					className="fixed bottom-20 right-4 p-2 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-20"
 					style={{ bottom, zIndex }}
 					onClick={handleOpenWindow}
+					aria-label={`開啟 ${title} 視窗`}
+					aria-expanded={isWindowOpen}
 					title={`開啟 ${title}`}
 				>
 					{icon || (
