@@ -271,8 +271,10 @@ function About() {
 
 				{/* 彩蛋按鈕 - 置於內容區域右下角 */}
 				<button
-					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10"
+					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10 focus:outline-none focus:ring-2 focus:ring-pink-300"
 					onClick={handleEasterEggClick}
+					aria-label="觸發愛心煙火彩蛋"
+					aria-pressed={showEasterEgg}
 					title="點我看愛心煙火！"
 				>
 					<svg

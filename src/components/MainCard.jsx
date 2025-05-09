@@ -2,7 +2,7 @@ import { useState } from "react";
 import avatarImage from "../assets/avatar.png";
 import { useTheme } from "../contexts/ThemeContext";
 
-function MainCard(){
+function MainCard() {
 	const [clicked, setClicked] = useState(false);
 	const { toggleTheme, themeStyles, theme } = useTheme();
 
@@ -48,7 +48,7 @@ function MainCard(){
 				{/* 像素風頭像 */}
 				<img
 					src={avatarImage}
-					alt="avatar"
+					alt="Cherry 的像素風頭像"
 					className={`mx-auto w-24 sm:w-32 h-24 sm:h-32 rounded-full border-4 ${styles.avatarBorder} shadow-md pixelated`}
 				/>
 				{/* 名稱 */}
@@ -61,13 +61,18 @@ function MainCard(){
 				<p
 					className={`${styles.subText} mt-2 font-cubic text-xs xs:text-xs sm:text-sm`}
 				>
-					前端網頁設計初學者。 <br/>
+					前端網頁設計初學者。 <br />
 					請點擊看看下面的按鈕o(=^w^=)o
 				</p>
 				{/* 互動按鈕 */}
 				<button
 					onClick={handleClick}
-					className={`mt-6 px-2 xs:px-3 sm:px-4 py-0.5 xs:py-1 sm:py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm transition-all duration-300 relative overflow-hidden group font-pixel text-xs sm:text-sm hover:scale-105 hover:animate-flicker`}
+					className={`mt-6 px-2 xs:px-3 sm:px-4 py-0.5 xs:py-1 sm:py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm transition-all duration-300 relative overflow-hidden group font-pixel text-xs sm:text-sm hover:scale-105 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300`}
+					aria-label={`切換到${
+						theme === "pink-purple" ? "粉藍" : "粉紫"
+					}主題`}
+					aria-pressed={clicked}
+					title="點擊切換主題"
 				>
 					<span
 						className={`${

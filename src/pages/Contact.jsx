@@ -18,7 +18,7 @@ function Contact() {
 	});
 	const [errors, setErrors] = useState({});
 	const [submitted, setSubmitted] = useState(false);
-	const [envelopes, setEnvelopes] = useState([]);  //信封動畫
+	const [envelopes, setEnvelopes] = useState([]); //信封動畫
 
 	//個人聯繫資訊
 	const contactInfo = {
@@ -260,7 +260,8 @@ function Contact() {
 						</svg>
 						<a
 							href={`mailto:${contactInfo.email}`}
-							className="font-pixel text-xs text-gray-500 hover:text-pink-500 transition-colors"
+							className="font-pixel text-xs text-gray-500 hover:text-pink-500 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-300"
+							aria-label="寄送電子郵件給 Cherry"
 							title="寄email給我"
 						>
 							Gmail/bubibuuu
@@ -286,7 +287,8 @@ function Contact() {
 							href={contactInfo.github}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="font-pixel text-xs text-gray-500 hover:text-purple-500 transition-colors"
+							className="font-pixel text-xs text-gray-500 hover:text-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-300"
+							aria-label="訪問 Cherry 的 GitHub 頁面"
 							title="拜訪我的GitHub"
 						>
 							github/hihicherry
@@ -312,6 +314,10 @@ function Contact() {
 							errors.name ? "border-red-500" : ""
 						}`}
 						aria-label="請輸入你的姓名"
+						aria-invalid={!!errors.name}
+						aria-describedby={
+							errors.name ? "name-error" : undefined
+						}
 					/>
 					{errors.name && (
 						<p className="text-red-500 font-cubic text-xs mt-1">
@@ -336,6 +342,10 @@ function Contact() {
 							errors.email ? "border-red-500" : ""
 						}`}
 						aria-label="請輸入你的電子郵件地址"
+						aria-invalid={!!errors.email}
+						aria-describedby={
+							errors.email ? "email-error" : undefined
+						}
 					/>
 					{errors.email && (
 						<p className="text-red-500 font-cubic text-xs mt-1">
@@ -360,7 +370,11 @@ function Contact() {
 						} hover:animate-pulse ${
 							errors.message ? "border-red-500" : ""
 						}`}
-						aria-label="請輸入你的訊息"
+						aria-label="請輸入你要傳送的訊息"
+						aria-invalid={!!errors.message}
+						aria-describedby={
+							errors.message ? "message-error" : undefined
+						}
 					/>
 					{errors.message && (
 						<p className="text-red-500 font-cubic text-xs mt-1">
@@ -371,17 +385,21 @@ function Contact() {
 				<div className="flex gap-2">
 					<button
 						onClick={handleSubmit}
-						className={`px-3 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker`}
-						title="Send message"
-						aria-label="傳送"
+						className={`px-3 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300`}
+						aria-label="傳送表單"
+						aria-disabled={submitted}
+						aria-describedby={
+							errors.submit ? "submit-error" : undefined
+						}
+						title="送出訊息"
 					>
 						送出
 					</button>
 					<button
 						onClick={handleClear}
-						className={`px-3 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110`}
-						title="Clear form"
-						aria-label="清除"
+						className={`px-3 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300`}
+						aria-label="清除聯繫表單"
+						title="清除表單"
 					>
 						清除
 					</button>

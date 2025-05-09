@@ -240,7 +240,9 @@ function Projects() {
 									href={project.demoLink}
 									target="_blank"
 									rel="noopener noreferrer"
-									className={`px-2 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-xs text-indigo-700 hover:scale-110 hover:animate-flicker`}
+									className={`px-2 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-xs text-indigo-700 hover:scale-110 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300`}
+									aria-label={`查看 ${project.title} 的線上演示`}
+									title={`查看 ${project.title} 演示`}
 								>
 									Demo
 								</a>
@@ -248,7 +250,9 @@ function Projects() {
 									href={project.sourceLink}
 									target="_blank"
 									rel="noopener noreferrer"
-									className={`px-2 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-xs text-indigo-700 hover:scale-110 hover:animate-flicker`}
+									className={`px-2 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-xs text-indigo-700 hover:scale-110 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300`}
+									aria-label={`查看 ${project.title} 的原始碼`}
+									title={`查看 ${project.title} 原始碼`}
 								>
 									Source
 								</a>
@@ -259,8 +263,10 @@ function Projects() {
 
 				{/* 彩蛋按鈕 */}
 				<button
-					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10"
+					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10 ocus:outline-none focus:ring-2 focus:ring-pink-300"
 					onClick={handleEasterEggClick}
+					aria-label="觸發愛心煙火彩蛋"
+					aria-pressed={showEasterEgg}
 					title="點我有驚喜！"
 				>
 					<svg
