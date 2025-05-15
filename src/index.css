@@ -16,6 +16,7 @@
 body {
 	@apply min-h-screen flex items-center justify-center transition-all duration-500 bg-gradient-to-br from-pink-100 to-blue-100;
 	animation: gradientShift 20s ease infinite;
+	cursor: url("/assets/custom-cursor.cur"), auto;
 }
 
 /*網頁背景動畫*/
@@ -350,13 +351,4 @@ body.pink-blue .trail::after {
 button:focus-visible {
 	outline: 2px solid #ff99cc; /* retro-pink */
 	outline-offset: 2px;
-}
-
-/* 確保按鈕在焦點時有明顯的視覺反饋 */
-button[aria-pressed="true"] {
-	background: linear-gradient(
-		to right,
-		#ff99cc,
-		#cc99ff
-	); /* pink-to-purple */
 }

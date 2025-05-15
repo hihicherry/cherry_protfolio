@@ -62,7 +62,6 @@ function MainCard() {
 					className={`${styles.subText} mt-2 font-cubic text-xs xs:text-xs sm:text-sm`}
 				>
 					前端網頁設計初學者。 <br />
-					請點擊看看下面的按鈕o(=^w^=)o
 				</p>
 				{/* 互動按鈕 */}
 				<button
@@ -75,13 +74,9 @@ function MainCard() {
 					title="點擊切換主題"
 				>
 					<span
-						className={`${
-							styles.buttonText
-						} group-hover:underline transition-all duration-300 ${
-							clicked ? "line-through" : ""
-						}`}
+						className={`${styles.buttonText} group-hover:underline transition-all duration-300`}
 					>
-						{clicked ? "Done!" : "Click!"}
+						{clicked ? "Welcome" : "Press Play"}
 					</span>
 				</button>
 			</div>
