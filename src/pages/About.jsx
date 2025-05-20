@@ -215,9 +215,9 @@ function About() {
 								<span className="font-cubic text-xs text-gray-700 w-24">
 									{skill.name}
 								</span>
-								<div className="flex-1 bg-gray-200 border-2 border-indigo-200 rounded-sm h-3 overflow-hidden">
+								<div className="flex-1 bg-purple-100 border-2 border-purple-400 h-3 overflow-hidden">
 									<div
-										className={`bg-pink-300 h-full rounded-sm ${
+										className={`bg-pink-300 h-full ${
 											styles.cardBorder
 										} ${
 											animateBars

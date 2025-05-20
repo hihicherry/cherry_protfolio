@@ -17,6 +17,7 @@ body {
 	@apply min-h-screen flex items-center justify-center transition-all duration-500 bg-gradient-to-br from-pink-100 to-blue-100;
 	animation: gradientShift 20s ease infinite;
 	cursor: url("/assets/custom-cursor.cur"), auto;
+	background-image: url("/star_bg.jpeg");
 }
 
 /*網頁背景動畫*/

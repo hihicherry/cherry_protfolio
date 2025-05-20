@@ -306,7 +306,7 @@ function Contact() {
 						name="name"
 						value={formData.name}
 						onChange={handleChange}
-						className={`w-full border-2 ${
+						className={`w-full border-2 focus:bg-gray-50 ${
 							styles.cardBorder
 						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
 							styles.textareaFocusBorder
@@ -334,7 +334,7 @@ function Contact() {
 						name="email"
 						value={formData.email}
 						onChange={handleChange}
-						className={`w-full border-2 ${
+						className={`w-full border-2 focus:bg-gray-50 ${
 							styles.cardBorder
 						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
 							styles.textareaFocusBorder
@@ -363,7 +363,7 @@ function Contact() {
 						onChange={handleChange}
 						rows="4"
 						maxLength="500"
-						className={`w-full border-2 ${
+						className={`w-full border-2 focus:bg-gray-50 ${
 							styles.cardBorder
 						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
 							styles.textareaFocusBorder
