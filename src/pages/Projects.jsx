@@ -208,7 +208,7 @@ function Projects() {
 					{projects.map((project) => (
 						<div
 							key={project.id}
-							className={`border-2 ${styles.cardBorder} rounded-sm p-3 bg-white shadow-md hover:scale-105 hover:animate-pulse transition-all`}
+							className={`${styles.projectCardBg} border-2 ${styles.cardBorder} rounded-sm p-3 shadow-md hover:scale-105 hover:animate-pulse transition-all`}
 						>
 							{/* 專案圖片 */}
 							<img
@@ -229,7 +229,7 @@ function Projects() {
 								{project.tech.map((tech) => (
 									<span
 										key={tech}
-										className="font-cubic text-xs bg-pink-100 text-indigo-700 px-1.5 py-0.5 rounded-sm"
+										className={`${styles.techBg} font-cubic text-xs text-indigo-700 px-1.5 py-0.5 rounded-sm`}
 									>
 										{tech}
 									</span>

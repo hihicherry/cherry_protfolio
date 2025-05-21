@@ -37,6 +37,8 @@ export function ThemeProvider({ children }) {
 			cursor: "#ff99cc", // 打字機光標和粒子顏色（retro-pink）
 			trail: "#cc99ff", // 滑鼠軌跡顏色（retro-purple）
 			textareaFocusBorder: "hover:border-retro-purple",
+			projectCardBg: "bg-gradient-to-b from-pink-100 to-white",
+			techBg: "bg-pink-200",
 		},
 		"pink-blue": {
 			titleBg: "bg-gradient-to-r from-sky-200 to-pink-200", // 視窗標題列背景色
@@ -52,6 +54,8 @@ export function ThemeProvider({ children }) {
 			cursor: "#99ccff", // 打字機光標和粒子顏色（retro-blue）
 			trail: "#ff99cc", // 滑鼠軌跡顏色（retro-pink）
 			textareaFocusBorder: "hover:border-retro-pink",
+			projectCardBg: "bg-gradient-to-b from-sky-100 to-white",
+			techBg: "bg-sky-200",
 		},
 	};
 
