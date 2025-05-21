@@ -16,7 +16,7 @@ export function ThemeProvider({ children }) {
 			const newTheme =
 				prevTheme === "pink-purple" ? "pink-blue" : "pink-purple";
 			localStorage.setItem("theme", newTheme);
-            console.log("色彩主題切換:", newTheme);
+			console.log("色彩主題切換:", newTheme);
 			return newTheme;
 		});
 	};

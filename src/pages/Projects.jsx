@@ -13,12 +13,13 @@ const projects = [
 		id: 1,
 		title: "電影查詢網站",
 		description:
-			"一個提供使用者查詢電影、電視劇資訊的網站，並提供「加入我的最愛」功能，支援本地儲存。",
+			"一個使用 TypeScript 和 React 構建的現代化網站，支援查詢電影與電視劇資訊，並提供「加入我的最愛」功能，資料透過 LocalStorage 持久化儲存，確保類型安全與優質使用者體驗。",
 		tech: [
 			"React",
+			"TypeScript",
 			"Vite",
-			"JavaScript",
 			"Tailwind CSS",
+			"Framer Motion",
 			"LocalStorage",
 			"TMDB API",
 		],
