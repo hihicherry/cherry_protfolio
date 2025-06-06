@@ -187,7 +187,7 @@ function About() {
 				}
 			>
 				{/* 自我介紹 */}
-				<div className="mb-4">
+				<div className={`mb-4`}>
 					<h2 className="font-pixel text-base text-indigo-700 mb-2">
 						嗨！我是 Cherry 🍒
 					</h2>
@@ -248,7 +248,7 @@ function About() {
 					<ul className="font-cubic text-sm text-gray-700 list-disc pl-5">
 						<li>興趣：看漫畫/動畫/遊戲直播、聽音樂</li>
 						<li>靈感來源：復古像素風 UI、粉色系</li>
-						<li>目前目標：打造一個互動式像素風個人網站</li>
+						<li>目前目標：製作電子卡片產生器</li>
 						<li>
 							未來夢想：成為前端網頁開發者，設計好看又有趣的網頁！
 						</li>
