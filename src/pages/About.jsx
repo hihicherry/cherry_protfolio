@@ -192,11 +192,10 @@ function About() {
 						嗨！我是 Cherry 🍒
 					</h2>
 					<p className="font-cubic text-sm text-gray-700">
-						我是來自台灣的前端開發初學者，熱衷於打造充滿趣味的網頁體驗！目前專注於學習
-						React、Tailwind CSS 和
-						JavaScript，夢想成為能將美學與現代技術結合的開發者。我愛復古遊戲的
-						UI 設計（像是《Needy Streamer
-						Overload》！），也喜歡用粉色系和愛心動畫表達我的創意 💕
+						你好，我是來自台灣的前端工程師，熱衷於打造兼具美感與良好使用體驗的網頁介面。我主要使用
+						React、JavaScript、Tailwind CSS 與 Framer Motion
+						開發互動式網站，重視響應式設計、細節打磨與流暢的使用者體驗，並持續學習現代前端技術與設計思維。我喜歡將前端開發結合視覺設計，從像素藝術、復古遊戲介面到現代產品設計中汲取靈感，期望透過細膩的互動與設計，打造兼具功能性與溫度的數位體驗。
+						✨
 					</p>
 				</div>
 
