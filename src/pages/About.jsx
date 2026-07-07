@@ -99,7 +99,7 @@ function About() {
 					observer.disconnect();
 				}
 			},
-			{ threshold: 0.5 }
+			{ threshold: 0.5 },
 		);
 
 		if (skillBarsRef.current[0]) {
@@ -247,9 +247,10 @@ function About() {
 					<ul className="font-cubic text-sm text-gray-700 list-disc pl-5">
 						<li>興趣：看漫畫/動畫/遊戲直播、聽音樂</li>
 						<li>靈感來源：復古像素風 UI、粉色系</li>
-						<li>目前目標：製作電子卡片產生器</li>
+						<li>目前目標：製作habit dashboard</li>
 						<li>
-							未來夢想：成為前端網頁開發者，設計好看又有趣的網頁！
+							期許自己能持續精進前端技術，打造兼具美感、互動性與使用者體驗的
+							Web 產品。
 						</li>
 					</ul>
 				</div>

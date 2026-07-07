@@ -61,7 +61,9 @@ function MainCard() {
 				<p
 					className={`${styles.subText} mt-2 font-cubic text-xs xs:text-xs sm:text-sm`}
 				>
-					前端網頁設計初學者。 <br />
+					Frontend Developer <br />
+					Building modern, accessible and interactive web experiences.{" "}
+					<br />
 				</p>
 				{/* 互動按鈕 */}
 				<button
