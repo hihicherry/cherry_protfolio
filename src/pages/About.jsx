@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import PixelWindow from "../components/PixelWindow";
 import NavBar from "../components/NavBar";
 import PageHearts from "../components/PageHearts";
@@ -144,12 +145,12 @@ function About() {
 				<div className="mb-4">
 					<p className="font-cubic text-sm text-gray-700">
 						有什麼想要問我的嗎？請到{" "}
-						<a
-							href="/cherry_protfolio/contact"
+						<Link
+							to="/contact"
 							className="font-cubic text-s bg-pink-100 text-indigo-700 px-1.5 py-0.5 rounded-sm hover:underline"
 						>
 							聯絡我
-						</a>{" "}
+						</Link>{" "}
 						頁面留言吧！💌
 					</p>
 				</div>
