@@ -7,12 +7,12 @@ function NavBar({ className }) {
 	const location = useLocation();
 	const currentPath = location.pathname;
 
-	//nav按鈕統一整理
+	//nav按鈕統一整理（相對路徑；basename 由 Router 處理）
 	const navLinks = [
-		{ to: "/cherry_protfolio/", label: "首頁", icon: "🏠" },
-		{ to: "/cherry_protfolio/about", label: "關於我", icon: "🍒" },
-		{ to: "/cherry_protfolio/projects", label: "我的作品", icon: "💻" },
-		{ to: "/cherry_protfolio/contact", label: "聯絡我", icon: "💌" },
+		{ to: "/", label: "首頁", icon: "🏠", end: true },
+		{ to: "/about", label: "關於我", icon: "🍒" },
+		{ to: "/projects", label: "我的作品", icon: "💻" },
+		{ to: "/contact", label: "聯絡我", icon: "💌" },
 	];
 
 	return (
@@ -25,6 +25,7 @@ function NavBar({ className }) {
 					<NavLink
 						key={link.to}
 						to={link.to}
+						end={link.end}
 						className={({ isActive }) =>
 							`p-1 ${styles.buttonBg} ${
 								isActive ? "bg-pink-300" : styles.buttonHoverBg
