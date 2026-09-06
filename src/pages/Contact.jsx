@@ -152,7 +152,7 @@ function Contact() {
 					message: formData.message,
 					to_email: contactInfo.email, //我的email
 				},
-				publicKey
+				publicKey,
 			)
 			.then(() => {
 				setSubmitted(true);
@@ -415,7 +415,7 @@ function Contact() {
 							: "Cherry 已收到你的訊息！<3"}
 					</p>
 					<p className="font-cubic text-sm text-center text-indigo-700">
-						請檢查你的郵箱以獲取訊息備份。
+						請檢查你的電子信箱以獲取訊息備份。
 					</p>
 				</div>
 			)}

@@ -44,7 +44,7 @@ function PixelWindow({
 								className="border border-indigo-700 p-1 flex items-center justify-center cursor-pointer hover:bg-pink-300 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300"
 								onClick={handleCloseWindow}
 								aria-label={`關閉 ${title} 視窗`}
-								title="關閉視窗"
+								title={`關閉 ${title}`}
 							>
 								<svg
 									width="12"
