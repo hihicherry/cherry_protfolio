@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "../contexts/ThemeContext";
 import PixelWindow from "../components/PixelWindow";
 import NavBar from "../components/NavBar";
-import Heart from "../components/Heart";
+import PageHearts from "../components/PageHearts";
+import PageParticles from "../components/PageParticles";
+import { usePageEffects } from "../hooks/usePageEffects";
 
 function About() {
-	const { theme, themeStyles } = useTheme();
-	const lastTrailTime = useRef(0);
-	const lastHeartTime = useRef(0);
-	const trailContainerRef = useRef(null);
+	const { hearts, removeHeart, spawnFireworkHearts, styles } =
+		usePageEffects();
 	const skillBarsRef = useRef([]);
-	const [hearts, setHearts] = useState([]);
 	const [showEasterEgg, setShowEasterEgg] = useState(false);
 	const [animateBars, setAnimateBars] = useState(false);
 
@@ -22,73 +20,6 @@ function About() {
 		{ name: "Tailwind CSS", level: 70 },
 		{ name: "Git & GitHub", level: 60 },
 	];
-
-	// 設置主題
-	useEffect(() => {
-		document.body.className = theme;
-	}, [theme]);
-
-	// 滑鼠軌跡（限制數量）
-	useEffect(() => {
-		const maxTrails = 20;
-		const trails = [];
-
-		const handleMouseMove = (e) => {
-			const now = Date.now();
-			if (now - lastTrailTime.current < 80) return;
-			lastTrailTime.current = now;
-
-			const trail = document.createElement("div");
-			trail.className = "trail";
-			trail.style.left = `${e.clientX - 5}px`;
-			trail.style.top = `${e.clientY - 5}px`;
-			trail.style.backgroundColor = themeStyles[theme].trail || "#ff99cc";
-			document.body.appendChild(trail);
-			trails.push(trail);
-
-			if (trails.length > maxTrails) {
-				const oldTrail = trails.shift();
-				oldTrail.remove();
-			}
-
-			setTimeout(() => {
-				trail.remove();
-				const index = trails.indexOf(trail);
-				if (index !== -1) trails.splice(index, 1);
-			}, 1000);
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-		return () => document.removeEventListener("mousemove", handleMouseMove);
-	}, [theme, themeStyles]);
-
-	// 點擊或觸控生成愛心
-	useEffect(() => {
-		const handleClickOrTouch = (e) => {
-			const now = Date.now();
-			if (now - lastHeartTime.current < 200) return;
-			lastHeartTime.current = now;
-
-			const x = e.clientX || e.touches?.[0]?.clientX;
-			const y = e.clientY || e.touches?.[0]?.clientY;
-
-			if (!x || !y) return;
-
-			const id = Date.now();
-			setHearts((prev) => [
-				...prev,
-				{ id, x, y, color: themeStyles[theme].trail || "#ff99cc" },
-			]);
-		};
-
-		document.addEventListener("click", handleClickOrTouch);
-		document.addEventListener("touchstart", handleClickOrTouch);
-
-		return () => {
-			document.removeEventListener("click", handleClickOrTouch);
-			document.removeEventListener("touchstart", handleClickOrTouch);
-		};
-	}, [theme, themeStyles]);
 
 	// 觸發進度條動畫
 	useEffect(() => {
@@ -109,61 +40,15 @@ function About() {
 		return () => observer.disconnect();
 	}, []);
 
-	const removeHeart = (id) => {
-		setHearts((prev) => prev.filter((heart) => heart.id !== id));
-	};
-
-	// 彩蛋觸發 - 煙火效果
 	const handleEasterEggClick = () => {
 		setShowEasterEgg(true);
 		setTimeout(() => setShowEasterEgg(false), 3000);
-
-		// 在視窗中央生成 12 個愛心，模擬煙火
-		const centerX = window.innerWidth / 2;
-		const centerY = window.innerHeight / 2;
-		const heartCount = 12;
-
-		for (let i = 0; i < heartCount; i++) {
-			const id = Date.now() + i;
-			// 隨機角度（0-360度）
-			const angle = (i / heartCount) * 360;
-			// 隨機距離（50-150px）
-			const distance = 50 + Math.random() * 100;
-			// 計算目標位置
-			const rad = (angle * Math.PI) / 180;
-			const targetX = centerX + distance * Math.cos(rad);
-			const targetY = centerY + distance * Math.sin(rad);
-			// 隨機旋轉角度
-			const rotation = Math.random() * 360;
-
-			setHearts((prev) => [
-				...prev,
-				{
-					id,
-					x: centerX,
-					y: centerY,
-					targetX,
-					targetY,
-					rotation,
-					color: themeStyles[theme].trail || "#ff99cc",
-					isFirework: true, // 標記為煙火愛心
-				},
-			]);
-		}
+		spawnFireworkHearts();
 	};
-
-	const styles = themeStyles[theme];
 
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center p-2 md:p-4 relative overflow-hidden pb-[192px] sm:pb-0">
-			{/* 背景粒子 */}
-			<div ref={trailContainerRef} className="absolute inset-0 z-0">
-				<div className="particle top-10 left-10"></div>
-				<div className="particle top-20 left-1/4"></div>
-				<div className="particle top-30 left-1/2"></div>
-				<div className="particle top-40 left-3/4"></div>
-				<div className="particle top-50 right-10"></div>
-			</div>
+			<PageParticles />
 
 			{/* 關於我視窗 */}
 			<PixelWindow
@@ -290,20 +175,7 @@ function About() {
 				</button>
 			</PixelWindow>
 
-			{/* 愛心動畫 */}
-			{hearts.map((heart) => (
-				<Heart
-					key={heart.id}
-					x={heart.x}
-					y={heart.y}
-					targetX={heart.targetX}
-					targetY={heart.targetY}
-					rotation={heart.rotation}
-					color={heart.color}
-					isFirework={heart.isFirework}
-					onRemove={() => removeHeart(heart.id)}
-				/>
-			))}
+			<PageHearts hearts={hearts} onRemove={removeHeart} />
 
 			<NavBar className="fade-in-delayed" />
 		</div>

@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "../contexts/ThemeContext";
+import { useState } from "react";
 import PixelWindow from "../components/PixelWindow";
 import NavBar from "../components/NavBar";
-import Heart from "../components/Heart";
+import PageHearts from "../components/PageHearts";
+import PageParticles from "../components/PageParticles";
+import { usePageEffects } from "../hooks/usePageEffects";
 import movieSearchAppImg from "/assets/movie-search-app.png";
 import retroTodoAppImg from "/assets/retro-todo-app.png";
-import movieDashboardImg from "/assets/movie-dashboard.png";
 
 // 專案資料（請替換成你的實際專案）
 const projects = [
@@ -37,150 +37,22 @@ const projects = [
 		demoLink: "https://hihicherry.github.io/retro-todo-app/",
 		sourceLink: "https://github.com/hihicherry/retro-todo-app",
 	},
-	{
-		id: 3,
-		title: "電影數據化儀表板",
-		description:
-			"一個電影數據可視化儀表板，展示熱門電影的評分、類型和熱門度，支持深色模式切換、語言切換和響應式圖表設計。",
-		tech: [
-			"React",
-			"Vite",
-			"Tailwind CSS",
-			"@tanstack/react-query",
-			"Recharts",
-			"Axios",
-		],
-		image: movieDashboardImg,
-		demoLink: "https://movie-dashboard-sigma.vercel.app/",
-		sourceLink: "https://github.com/hihicherry/movie-dashboard",
-	},
 ];
 
 function Projects() {
-	const { theme, themeStyles } = useTheme();
-	const lastTrailTime = useRef(0);
-	const lastHeartTime = useRef(0);
-	const trailContainerRef = useRef(null);
-	const [hearts, setHearts] = useState([]);
+	const { hearts, removeHeart, spawnFireworkHearts, styles } =
+		usePageEffects();
 	const [showEasterEgg, setShowEasterEgg] = useState(false);
 
-	// 設置主題
-	useEffect(() => {
-		document.body.className = theme;
-	}, [theme]);
-
-	// 滑鼠軌跡
-	useEffect(() => {
-		const maxTrails = 20;
-		const trails = [];
-
-		const handleMouseMove = (e) => {
-			const now = Date.now();
-			if (now - lastTrailTime.current < 80) return;
-			lastTrailTime.current = now;
-
-			const trail = document.createElement("div");
-			trail.className = "trail";
-			trail.style.left = `${e.clientX - 5}px`;
-			trail.style.top = `${e.clientY - 5}px`;
-			trail.style.backgroundColor = themeStyles[theme].trail || "#ff99cc";
-			document.body.appendChild(trail);
-			trails.push(trail);
-
-			if (trails.length > maxTrails) {
-				const oldTrail = trails.shift();
-				oldTrail.remove();
-			}
-
-			setTimeout(() => {
-				trail.remove();
-				const index = trails.indexOf(trail);
-				if (index !== -1) trails.splice(index, 1);
-			}, 1000);
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-		return () => document.removeEventListener("mousemove", handleMouseMove);
-	}, [theme, themeStyles]);
-
-	// 點擊或觸控生成愛心
-	useEffect(() => {
-		const handleClickOrTouch = (e) => {
-			const now = Date.now();
-			if (now - lastHeartTime.current < 200) return;
-			lastHeartTime.current = now;
-
-			const x = e.clientX || e.touches?.[0]?.clientX;
-			const y = e.clientY || e.touches?.[0]?.clientY;
-
-			if (!x || !y) return;
-
-			const id = Date.now();
-			setHearts((prev) => [
-				...prev,
-				{ id, x, y, color: themeStyles[theme].trail || "#ff99cc" },
-			]);
-		};
-
-		document.addEventListener("click", handleClickOrTouch);
-		document.addEventListener("touchstart", handleClickOrTouch);
-
-		return () => {
-			document.removeEventListener("click", handleClickOrTouch);
-			document.removeEventListener("touchstart", handleClickOrTouch);
-		};
-	}, [theme, themeStyles]);
-
-	const removeHeart = (id) => {
-		setHearts((prev) => prev.filter((heart) => heart.id !== id));
-	};
-
-	// 彩蛋觸發 - 煙火效果
 	const handleEasterEggClick = () => {
 		setShowEasterEgg(true);
 		setTimeout(() => setShowEasterEgg(false), 3000);
-
-		const centerX = window.innerWidth / 2;
-		const centerY = window.innerHeight / 2;
-		const heartCount = 12;
-
-		for (let i = 0; i < heartCount; i++) {
-			const id = Date.now() + i;
-			const angle = (i / heartCount) * 360;
-			const distance = 50 + Math.random() * 100;
-			const rad = (angle * Math.PI) / 180;
-			const targetX = centerX + distance * Math.cos(rad);
-			const targetY = centerY + distance * Math.sin(rad);
-			const rotation = Math.random() * 360;
-
-			setHearts((prev) => [
-				...prev,
-				{
-					id,
-					x: centerX,
-					y: centerY,
-					targetX,
-					targetY,
-					rotation,
-					color: themeStyles[theme].trail || "#ff99cc",
-					isFirework: true,
-				},
-			]);
-		}
+		spawnFireworkHearts();
 	};
-
-	const styles = themeStyles[theme];
 
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center p-2 md:p-4 relative overflow-hidden pb-[192px] sm:pb-0">
-			{/* 背景粒子 */}
-			<div ref={trailContainerRef} className="absolute inset-0 z-0">
-				<div className="particle top-10 left-10"></div>
-				<div className="particle top-20 left-1/4"></div>
-				<div className="particle top-30 left-1/2"></div>
-				<div className="particle top-40 left-3/4"></div>
-				<div className="particle top-50 right-10"></div>
-			</div>
+			<PageParticles />
 
 			{/* 專案視窗 */}
 			<PixelWindow
@@ -264,7 +136,7 @@ function Projects() {
 
 				{/* 彩蛋按鈕 */}
 				<button
-					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10 ocus:outline-none focus:ring-2 focus:ring-pink-300"
+					className="absolute bottom-2 right-2 p-1.5 bg-gradient-to-r from-pink-200 to-purple-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm hover:scale-110 hover:animate-flicker animate-pulse z-10 focus:outline-none focus:ring-2 focus:ring-pink-300"
 					onClick={handleEasterEggClick}
 					aria-label="觸發愛心煙火彩蛋"
 					aria-pressed={showEasterEgg}
@@ -283,20 +155,7 @@ function Projects() {
 				</button>
 			</PixelWindow>
 
-			{/* 愛心動畫 */}
-			{hearts.map((heart) => (
-				<Heart
-					key={heart.id}
-					x={heart.x}
-					y={heart.y}
-					targetX={heart.targetX}
-					targetY={heart.targetY}
-					rotation={heart.rotation}
-					color={heart.color}
-					isFirework={heart.isFirework}
-					onRemove={() => removeHeart(heart.id)}
-				/>
-			))}
+			<PageHearts hearts={hearts} onRemove={removeHeart} />
 
 			<NavBar className="fade-in-delayed" />
 		</div>
