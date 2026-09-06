@@ -79,7 +79,7 @@ function About() {
 					</h2>
 					<p className="font-cubic text-sm text-gray-700">
 						你好，我是來自台灣的前端工程師，熱衷於打造兼具美感與良好使用體驗的網頁介面。我主要使用
-						React、JavaScript、Tailwind CSS 與 Framer Motion
+						React、JavaScript 與 Tailwind CSS
 						開發互動式網站，重視響應式設計、細節打磨與流暢的使用者體驗，並持續學習現代前端技術與設計思維。我喜歡將前端開發結合視覺設計，從像素藝術、復古遊戲介面到現代產品設計中汲取靈感，期望透過細膩的互動與設計，打造兼具功能性與溫度的數位體驗。
 						✨
 					</p>
