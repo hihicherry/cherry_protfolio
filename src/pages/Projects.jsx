@@ -37,23 +37,6 @@ const projects = [
 		demoLink: "https://hihicherry.github.io/retro-todo-app/",
 		sourceLink: "https://github.com/hihicherry/retro-todo-app",
 	},
-	{
-		id: 3,
-		title: "電影數據化儀表板",
-		description:
-			"一個電影數據可視化儀表板，展示熱門電影的評分、類型和熱門度，支持深色模式切換、語言切換和響應式圖表設計。",
-		tech: [
-			"React",
-			"Vite",
-			"Tailwind CSS",
-			"@tanstack/react-query",
-			"Recharts",
-			"Axios",
-		],
-		image: movieDashboardImg,
-		demoLink: "https://movie-dashboard-sigma.vercel.app/",
-		sourceLink: "https://github.com/hihicherry/movie-dashboard",
-	},
 ];
 
 function Projects() {
