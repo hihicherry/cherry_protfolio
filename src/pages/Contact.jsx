@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "../contexts/ThemeContext";
+import { useState } from "react";
 import NavBar from "../components/NavBar";
 import PixelWindow from "../components/PixelWindow";
-import Heart from "../components/Heart";
+import PageHearts from "../components/PageHearts";
+import PageParticles from "../components/PageParticles";
+import { usePageEffects } from "../hooks/usePageEffects";
 import emailjs from "@emailjs/browser";
 
 function Contact() {
-	const { theme, themeStyles } = useTheme();
-	const lastTrailTime = useRef(0);
-	const lastHeartTime = useRef(0);
-	const trailContainerRef = useRef(null);
-	const [hearts, setHearts] = useState([]); //管理愛心動畫
+	const { hearts, removeHeart, addHearts, styles, trailColor } =
+		usePageEffects();
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
@@ -18,6 +16,7 @@ function Contact() {
 	});
 	const [errors, setErrors] = useState({});
 	const [submitted, setSubmitted] = useState(false);
+	const [isSending, setIsSending] = useState(false);
 	const [envelopes, setEnvelopes] = useState([]); //信封動畫
 
 	//個人聯繫資訊
@@ -26,82 +25,11 @@ function Contact() {
 		github: "https://github.com/hihicherry",
 	};
 
-	// 滑鼠軌跡
-	useEffect(() => {
-		const maxTrails = 20; //控制元素生成數量
-		const trails = [];
-
-		const handleMouseMove = (e) => {
-			const now = Date.now();
-			if (now - lastTrailTime.current < 80) return;
-
-			lastTrailTime.current = now;
-
-			const trail = document.createElement("div");
-			trail.className = "trail";
-			trail.style.left = `${e.clientX - 5}px`;
-			trail.style.top = `${e.clientY - 5}px`;
-			trail.style.backgroundColor = themeStyles[theme].trail || "#ff99cc";
-			document.body.appendChild(trail);
-			trails.push(trail);
-
-			//檢查軌跡是否超過上限，超過則刪除最早的
-			if (trails.length > maxTrails) {
-				const oldTrail = trails.shift();
-				oldTrail.remove();
-			}
-
-			setTimeout(() => {
-				trail.remove();
-				const index = trails.indexOf(trail);
-				if (index !== -1) trails.splice(index, 1);
-			}, 1000);
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-		return () => document.removeEventListener("mousemove", handleMouseMove);
-	}, [theme, themeStyles]);
-
-	//點擊or觸控生成愛心
-	useEffect(() => {
-		const handleClickOrTouch = (e) => {
-			const now = Date.now();
-			//愛心生成頻率 200ms一次
-			if (now - lastHeartTime < 200) return;
-			lastHeartTime.current = now;
-
-			//獲得點擊或是觸控的位置
-			const x = e.clientX || e.touches?.[0]?.clientX;
-			const y = e.clientY || e.touches?.[0]?.clientY;
-
-			if (!x || !y) return; // 確保有有效座標
-
-			const id = Date.now();
-			setHearts((prev) => [
-				...prev,
-				{ id, x, y, color: themeStyles[theme].trail || "#ff99cc" },
-			]);
-		};
-
-		document.addEventListener("click", handleClickOrTouch);
-		document.addEventListener("touchstart", handleClickOrTouch);
-
-		return () => {
-			document.removeEventListener("click", handleClickOrTouch);
-			document.removeEventListener("touchstart", handleClickOrTouch);
-		};
-	}, [theme, themeStyles]);
-
-	//確保愛心動畫結束後從狀態移除
-	const removeHeart = (id) => {
-		setHearts((prev) => prev.filter((heart) => heart.id !== id));
-	};
-
 	//表單處理
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
-		setErrors((prev) => ({ ...prev, [name]: "" }));
+		setErrors((prev) => ({ ...prev, [name]: "", submit: "" }));
 	};
 
 	const validateForm = () => {
@@ -118,6 +46,8 @@ function Contact() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (isSending) return;
+
 		const newErrors = validateForm();
 		if (Object.keys(newErrors).length > 0) {
 			setErrors(newErrors);
@@ -141,7 +71,10 @@ function Contact() {
 			return;
 		}
 
-		//emailJS發送
+		setIsSending(true);
+		setErrors((prev) => ({ ...prev, submit: "" }));
+
+		// EmailJS v4：第四參數應為 options 物件（字串仍相容，但物件為官方建議）
 		emailjs
 			.send(
 				serviceId,
@@ -150,32 +83,26 @@ function Contact() {
 					from_name: formData.name,
 					from_email: formData.email,
 					message: formData.message,
-					to_email: contactInfo.email, //我的email
+					to_email: contactInfo.email,
 				},
-				publicKey
+				{ publicKey },
 			)
 			.then(() => {
 				setSubmitted(true);
 				setFormData({ name: "", email: "", message: "" });
 				setTimeout(() => setSubmitted(false), 3000);
 
-				// 提交成功生成三個愛心
 				const x = window.innerWidth / 2;
 				const y = window.innerHeight / 2;
-				for (let i = 0; i < 3; i++) {
-					const id = Date.now() + i;
-					setHearts((prev) => [
-						...prev,
-						{
-							id,
-							x: x - 20 + i * 10,
-							y,
-							color: themeStyles[theme].trail || "#ff99cc",
-						},
-					]);
-				}
+				addHearts(
+					[0, 1, 2].map((i) => ({
+						id: Date.now() + i,
+						x: x - 20 + i * 10,
+						y,
+						color: trailColor,
+					})),
+				);
 
-				//生成信封動畫
 				const envelopeId = Date.now();
 				setEnvelopes((prev) => [
 					...prev,
@@ -183,14 +110,28 @@ function Contact() {
 						id: envelopeId,
 						x,
 						y,
-						color: themeStyles[theme].trail || "#ff99cc",
+						color: trailColor,
 					},
 				]);
 			})
 			.catch((error) => {
-				setErrors({
-					submit: "訊息傳送失敗，請再試一次。",
+				console.error("EmailJS send failed:", {
+					status: error?.status,
+					text: error?.text,
+					error,
 				});
+				const detail =
+					typeof error?.text === "string" && error.text.trim()
+						? error.text.trim()
+						: null;
+				setErrors({
+					submit: detail
+						? `訊息傳送失敗（${detail}）`
+						: "訊息傳送失敗，請再試一次。",
+				});
+			})
+			.finally(() => {
+				setIsSending(false);
 			});
 	};
 
@@ -199,22 +140,9 @@ function Contact() {
 		setErrors({});
 	};
 
-	const removeEnvelope = (id) => {
-		setEnvelopes((prev) => prev.filter((envelope) => envelope.id !== id));
-	};
-
-	const styles = themeStyles[theme];
-
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center p-2 md:p-4 relative overflow-hidden pb-[192px] sm:pb-0">
-			{/* 背景粒子 */}
-			<div ref={trailContainerRef} className="absolute inset-0 z-0">
-				<div className="particle top-10 left-10"></div>
-				<div className="particle top-20 left-1/4"></div>
-				<div className="particle top-30 left-1/2"></div>
-				<div className="particle top-40 left-3/4"></div>
-				<div className="particle top-50 right-10"></div>
-			</div>
+			<PageParticles />
 
 			{/* Email 視窗 */}
 			<PixelWindow
@@ -297,113 +225,149 @@ function Contact() {
 				</div>
 
 				{/* 留言表單 */}
-				<div className="mb-2">
-					<label className="font-cubic text-sm text-gray-700">
-						你的姓名:
-					</label>
-					<input
-						type="text"
-						name="name"
-						value={formData.name}
-						onChange={handleChange}
-						className={`w-full border-2 focus:bg-gray-50 ${
-							styles.cardBorder
-						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
-							styles.textareaFocusBorder
-						} hover:animate-pulse ${
-							errors.name ? "border-red-500" : ""
-						}`}
-						aria-label="請輸入你的姓名"
-						aria-invalid={!!errors.name}
-						aria-describedby={
-							errors.name ? "name-error" : undefined
-						}
-					/>
-					{errors.name && (
-						<p className="text-red-500 font-cubic text-xs mt-1">
-							{errors.name}
+				<form onSubmit={handleSubmit}>
+					<div className="mb-2">
+						<label
+							htmlFor="contact-name"
+							className="font-cubic text-sm text-gray-700"
+						>
+							你的姓名:
+						</label>
+						<input
+							id="contact-name"
+							type="text"
+							name="name"
+							autoComplete="name"
+							value={formData.name}
+							onChange={handleChange}
+							className={`w-full border-2 focus:bg-gray-50 ${
+								styles.cardBorder
+							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+								styles.textareaFocusBorder
+							} hover:animate-pulse ${
+								errors.name ? "border-red-500" : ""
+							}`}
+							aria-invalid={!!errors.name}
+							aria-describedby={
+								errors.name ? "name-error" : undefined
+							}
+						/>
+						{errors.name && (
+							<p
+								id="name-error"
+								className="text-red-500 font-cubic text-xs mt-1"
+							>
+								{errors.name}
+							</p>
+						)}
+					</div>
+					<div className="mb-4">
+						<label
+							htmlFor="contact-email"
+							className="font-cubic text-sm text-gray-700"
+						>
+							你的電子郵件地址:
+						</label>
+						<input
+							id="contact-email"
+							type="email"
+							name="email"
+							autoComplete="email"
+							value={formData.email}
+							onChange={handleChange}
+							className={`w-full border-2 focus:bg-gray-50 ${
+								styles.cardBorder
+							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+								styles.textareaFocusBorder
+							} hover:animate-pulse ${
+								errors.email ? "border-red-500" : ""
+							}`}
+							aria-invalid={!!errors.email}
+							aria-describedby={
+								errors.email ? "email-error" : undefined
+							}
+						/>
+						{errors.email && (
+							<p
+								id="email-error"
+								className="text-red-500 font-cubic text-xs mt-1"
+							>
+								{errors.email}
+							</p>
+						)}
+					</div>
+					<div className="mb-4">
+						<label
+							htmlFor="contact-message"
+							className="font-cubic text-sm text-gray-700"
+						>
+							訊息:
+						</label>
+						<textarea
+							id="contact-message"
+							name="message"
+							autoComplete="off"
+							value={formData.message}
+							onChange={handleChange}
+							rows="4"
+							maxLength="500"
+							className={`w-full border-2 focus:bg-gray-50 ${
+								styles.cardBorder
+							} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
+								styles.textareaFocusBorder
+							} hover:animate-pulse ${
+								errors.message ? "border-red-500" : ""
+							}`}
+							aria-invalid={!!errors.message}
+							aria-describedby={
+								errors.message ? "message-error" : undefined
+							}
+						/>
+						{errors.message && (
+							<p
+								id="message-error"
+								className="text-red-500 font-cubic text-xs mt-1"
+							>
+								{errors.message}
+							</p>
+						)}
+					</div>
+					{errors.submit && (
+						<p
+							id="submit-error"
+							className="text-red-500 font-cubic text-xs mb-2"
+							role="alert"
+						>
+							{errors.submit}
 						</p>
 					)}
-				</div>
-				<div className="mb-4">
-					<label className="font-cubic text-sm text-gray-700">
-						你的電子郵件地址:
-					</label>
-					<input
-						type="email"
-						name="email"
-						value={formData.email}
-						onChange={handleChange}
-						className={`w-full border-2 focus:bg-gray-50 ${
-							styles.cardBorder
-						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
-							styles.textareaFocusBorder
-						} hover:animate-pulse ${
-							errors.email ? "border-red-500" : ""
-						}`}
-						aria-label="請輸入你的電子郵件地址"
-						aria-invalid={!!errors.email}
-						aria-describedby={
-							errors.email ? "email-error" : undefined
-						}
-					/>
-					{errors.email && (
-						<p className="text-red-500 font-cubic text-xs mt-1">
-							{errors.email}
-						</p>
-					)}
-				</div>
-				<div className="mb-4">
-					<label className="font-cubic text-sm text-gray-700">
-						訊息:
-					</label>
-					<textarea
-						name="message"
-						value={formData.message}
-						onChange={handleChange}
-						rows="4"
-						maxLength="500"
-						className={`w-full border-2 focus:bg-gray-50 ${
-							styles.cardBorder
-						} rounded-sm p-1 font-cubic text-sm focus:outline-none ${
-							styles.textareaFocusBorder
-						} hover:animate-pulse ${
-							errors.message ? "border-red-500" : ""
-						}`}
-						aria-label="請輸入你要傳送的訊息"
-						aria-invalid={!!errors.message}
-						aria-describedby={
-							errors.message ? "message-error" : undefined
-						}
-					/>
-					{errors.message && (
-						<p className="text-red-500 font-cubic text-xs mt-1">
-							{errors.message}
-						</p>
-					)}
-				</div>
-				<div className="flex gap-2">
-					<button
-						onClick={handleSubmit}
-						className={`px-3 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300`}
-						aria-label="傳送表單"
-						aria-disabled={submitted}
-						aria-describedby={
-							errors.submit ? "submit-error" : undefined
-						}
-						title="送出訊息"
-					>
-						送出
-					</button>
-					<button
-						onClick={handleClear}
-						className={`px-3 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300`}
-						aria-label="清除聯繫表單"
-						title="清除表單"
-					>
-						清除
-					</button>
-				</div>
+					<div className="flex gap-2">
+						<button
+							type="submit"
+							disabled={isSending}
+							className={`px-3 py-1 ${styles.buttonBg} ${styles.buttonHoverBg} border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 hover:animate-flicker focus:outline-none focus:ring-2 focus:ring-pink-300 disabled:opacity-60 disabled:hover:scale-100`}
+							aria-label="傳送表單"
+							aria-busy={isSending}
+							aria-disabled={isSending}
+							aria-describedby={
+								errors.submit ? "submit-error" : undefined
+							}
+							title="送出訊息"
+						>
+							{isSending ? "傳送中..." : "送出"}
+						</button>
+						<button
+							type="button"
+							onClick={handleClear}
+							disabled={isSending}
+							className={`px-3 py-1 bg-red-100 hover:bg-red-200 border-2 border-e-violet-400 border-b-violet-400 rounded-sm font-cubic text-sm text-indigo-700 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300 disabled:opacity-60`}
+							aria-label="清除聯繫表單"
+							title="清除表單"
+						>
+							清除
+						</button>
+					</div>
+				</form>
 			</PixelWindow>
 
 			{/* 提交成功提示 */}
@@ -421,15 +385,7 @@ function Contact() {
 			)}
 
 			<NavBar className="fade-in-delayed" />
-			{hearts.map((heart) => (
-				<Heart
-					key={heart.id}
-					x={heart.x}
-					y={heart.y}
-					color={heart.color}
-					onRemove={() => removeHeart(heart.id)}
-				/>
-			))}
+			<PageHearts hearts={hearts} onRemove={removeHeart} />
 
 			{envelopes.map((envelope) => (
 				<div
