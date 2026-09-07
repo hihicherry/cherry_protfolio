@@ -18,6 +18,7 @@ const projects = [
 			"React 19",
 			"TypeScript",
 			"Vite",
+			"TanStack Query",
 			"Tailwind CSS",
 			"TanStack Query",
 			"React Router",
