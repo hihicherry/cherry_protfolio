@@ -20,7 +20,7 @@
 | 框架 | React 19、Vite 6 |
 | 路由 | React Router 7 |
 | 樣式 | Tailwind CSS 3、自訂像素風 CSS／動畫 |
-| 狀態 | React Context（主題、圖示） |
+| 狀態 | React Context（主題） |
 | 聯絡 | EmailJS（`@emailjs/browser`） |
 | 部署 | `gh-pages` → GitHub Pages |
 
@@ -32,7 +32,7 @@
 src/
   pages/          # Home、About、Projects、Contact
   components/     # PixelWindow、NavBar、PageParticles、PageHearts…
-  contexts/       # ThemeContext、IconContext
+  contexts/       # ThemeContext
   hooks/          # usePageEffects
 ```
 
