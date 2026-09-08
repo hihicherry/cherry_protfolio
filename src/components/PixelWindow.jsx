@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { useIcons } from "../contexts/IconContext";
+
+// 關閉視窗後浮動按鈕位置（依頁面錯開，避免重疊）
+const WINDOW_ICON_POSITION = {
+	home: { bottom: "16rem", zIndex: 20 },
+	about: { bottom: "20rem", zIndex: 22 },
+	projects: { bottom: "22rem", zIndex: 23 },
+	contact: { bottom: "24rem", zIndex: 24 },
+};
 
 function PixelWindow({
 	title,
@@ -11,8 +18,7 @@ function PixelWindow({
 	pageKey,
 }) {
 	const [isWindowOpen, setIsWindowOpen] = useState(true);
-	const { icons } = useIcons();
-	const { bottom, zIndex } = icons[pageKey] || {
+	const { bottom, zIndex } = WINDOW_ICON_POSITION[pageKey] || {
 		bottom: "20rem",
 		zIndex: 20,
 	};
