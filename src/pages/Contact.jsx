@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import PixelWindow from "../components/PixelWindow";
 import PageHearts from "../components/PageHearts";
 import PageParticles from "../components/PageParticles";
+import { contactInfo } from "../data/contact";
 import { usePageEffects } from "../hooks/usePageEffects";
 import emailjs from "@emailjs/browser";
 
@@ -18,12 +19,6 @@ function Contact() {
 	const [submitted, setSubmitted] = useState(false);
 	const [isSending, setIsSending] = useState(false);
 	const [envelopes, setEnvelopes] = useState([]); //信封動畫
-
-	//個人聯繫資訊
-	const contactInfo = {
-		email: "bubibuuu@gmail.com",
-		github: "https://github.com/hihicherry",
-	};
 
 	//表單處理
 	const handleChange = (e) => {

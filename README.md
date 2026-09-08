@@ -17,10 +17,10 @@
 
 | 類別 | 使用 |
 |------|------|
-| 框架 | React 19、Vite 6 |
+| 框架 | React 19、Vite 6（漸進 TypeScript：`src/data`、ThemeContext） |
 | 路由 | React Router 7 |
 | 樣式 | Tailwind CSS 3、自訂像素風 CSS／動畫 |
-| 狀態 | React Context（主題） |
+| 狀態 | React Context（主題，TypeScript） |
 | 聯絡 | EmailJS（`@emailjs/browser`） |
 | 部署 | `gh-pages` → GitHub Pages |
 
@@ -30,9 +30,10 @@
 
 ```
 src/
+  data/           # 型別化內容資料（projects、skills、contact、theme）
   pages/          # Home、About、Projects、Contact
   components/     # PixelWindow、NavBar、PageParticles、PageHearts…
-  contexts/       # ThemeContext
+  contexts/       # ThemeContext（TS）
   hooks/          # usePageEffects
 ```
 
@@ -64,7 +65,8 @@ npm run dev
 npm run dev       # 本機開發
 npm run build     # 產出 dist，並複製 404.html
 npm run preview   # 預覽正式建置
-npm run lint      # ESLint
+npm run lint      # ESLint（含 TypeScript 規則）
+npm run typecheck # TypeScript 型別檢查（漸進：allowJs）
 npm run deploy    # build 後部署至 GitHub Pages
 ```
 
