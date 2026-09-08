@@ -9,33 +9,80 @@ import { usePageEffects } from "../hooks/usePageEffects";
 function About() {
 	const { hearts, removeHeart, spawnFireworkHearts, styles } =
 		usePageEffects();
-	const skillBarsRef = useRef([]);
+	const skillsSectionRef = useRef(null);
 	const [showEasterEgg, setShowEasterEgg] = useState(false);
-	const [animateBars, setAnimateBars] = useState(false);
+	const [animateSkills, setAnimateSkills] = useState(false);
 
-	// 技能資料
-	const skills = [
-		{ name: "HTML & CSS", level: 90 },
-		{ name: "JavaScript", level: 80 },
-		{ name: "React", level: 60 },
-		{ name: "Tailwind CSS", level: 70 },
-		{ name: "Git & GitHub", level: 60 },
+	// 技能 chips：色階 = 分類；精選對外最有訊號的標籤（非完整履歷清單）
+	const skillCategories = [
+		{
+			id: "languages",
+			label: "程式語言",
+			swatchClass: "bg-pink-100 border-pink-400",
+			chipClass:
+				"bg-pink-100 border-pink-400 text-pink-800 hover:bg-pink-200",
+			skills: ["JavaScript", "TypeScript", "HTML5", "CSS3"],
+		},
+		{
+			id: "frontend",
+			label: "前端技術",
+			swatchClass: "bg-purple-100 border-purple-400",
+			chipClass:
+				"bg-purple-100 border-purple-400 text-purple-800 hover:bg-purple-200",
+			skills: ["React", "Vite", "React Router", "Tailwind CSS", "RWD"],
+		},
+		{
+			id: "data",
+			label: "狀態與資料",
+			swatchClass: "bg-indigo-100 border-indigo-400",
+			chipClass:
+				"bg-indigo-100 border-indigo-400 text-indigo-800 hover:bg-indigo-200",
+			skills: [
+				"TanStack Query",
+				"React Context",
+				"RESTful API",
+				"LocalStorage",
+			],
+		},
+		{
+			id: "ui",
+			label: "UI／互動",
+			swatchClass: "bg-rose-100 border-rose-400",
+			chipClass:
+				"bg-rose-100 border-rose-400 text-rose-800 hover:bg-rose-200",
+			skills: ["Framer Motion", "CSS Animations"],
+		},
+		{
+			id: "toolchain",
+			label: "工程與設計",
+			swatchClass: "bg-sky-100 border-sky-400",
+			chipClass:
+				"bg-sky-100 border-sky-400 text-sky-800 hover:bg-sky-200",
+			skills: ["Git / GitHub", "ESLint"],
+		},
 	];
 
-	// 觸發進度條動畫
+	const skillChips = skillCategories.flatMap((category) =>
+		category.skills.map((skill) => ({
+			skill,
+			categoryId: category.id,
+			chipClass: category.chipClass,
+		})),
+	);
+
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (entries[0].isIntersecting) {
-					setAnimateBars(true);
+					setAnimateSkills(true);
 					observer.disconnect();
 				}
 			},
-			{ threshold: 0.5 },
+			{ threshold: 0.4 },
 		);
 
-		if (skillBarsRef.current[0]) {
-			observer.observe(skillBarsRef.current[0]);
+		if (skillsSectionRef.current) {
+			observer.observe(skillsSectionRef.current);
 		}
 
 		return () => observer.disconnect();
@@ -85,43 +132,45 @@ function About() {
 					</p>
 				</div>
 
-				{/* 技能 */}
-				<div className="mb-4">
+				{/* 技能 chips：色階對應分類 */}
+				<div className="mb-4" ref={skillsSectionRef}>
 					<h3 className="font-cubic text-sm text-indigo-700 mb-2">
-						技能狀態欄
+						技能標籤
 					</h3>
-					<div className="space-y-2">
-						{skills.map((skill, index) => (
-							<div
-								key={skill.name}
-								className="flex items-center gap-2"
-								ref={(el) => (skillBarsRef.current[index] = el)}
+					<ul className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
+						{skillCategories.map((category) => (
+							<li
+								key={category.id}
+								className="flex items-center gap-1 font-cubic text-[10px] text-gray-500"
 							>
-								<span className="font-cubic text-xs text-gray-700 w-24">
-									{skill.name}
-								</span>
-								<div className="flex-1 bg-purple-100 border-2 border-purple-400 h-3 overflow-hidden">
-									<div
-										className={`bg-pink-300 h-full ${
-											styles.cardBorder
-										} ${
-											animateBars
-												? "animate-retro-progress"
-												: ""
-										}`}
-										style={{
-											width: animateBars
-												? `${skill.level}%`
-												: "0%",
-											"--progress-width": `${skill.level}%`,
-										}}
-									></div>
-								</div>
-								<span className="font-cubic text-xs text-gray-700">
-									{skill.level}%
-								</span>
-							</div>
+								<span
+									className={`inline-block w-2.5 h-2.5 border ${category.swatchClass}`}
+									aria-hidden="true"
+								/>
+								{category.label}
+							</li>
 						))}
+					</ul>
+					<div className="flex flex-wrap gap-2">
+						{skillChips.map(
+							({ skill, categoryId, chipClass }, index) => (
+								<span
+									key={`${categoryId}-${skill}`}
+									className={`font-cubic text-xs px-2 py-1 border-2 rounded-sm transition-colors ${chipClass} ${
+										animateSkills
+											? "animate-skill-chip"
+											: "opacity-0"
+									}`}
+									style={{
+										animationDelay: animateSkills
+											? `${index * 60}ms`
+											: undefined,
+									}}
+								>
+									{skill}
+								</span>
+							),
+						)}
 					</div>
 				</div>
 
