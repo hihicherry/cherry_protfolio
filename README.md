@@ -22,7 +22,7 @@
 | 樣式 | Tailwind CSS 3、自訂像素風 CSS／動畫 |
 | 狀態 | React Context（主題，TypeScript） |
 | 聯絡 | EmailJS（`@emailjs/browser`） |
-| 部署 | `gh-pages` → GitHub Pages |
+| 部署 | GitHub Actions → GitHub Pages（[Vite 官方流程](https://vitejs.dev/guide/static-deploy.html#github-pages)） |
 
 > 本站動畫以 CSS 與自寫特效為主，未使用 Framer Motion。
 
@@ -67,14 +67,18 @@ npm run build     # 產出 dist，並複製 404.html
 npm run preview   # 預覽正式建置
 npm run lint      # ESLint（含 TypeScript 規則）
 npm run typecheck # TypeScript 型別檢查（漸進：allowJs）
-npm run deploy    # build 後部署至 GitHub Pages
 ```
 
 ## 部署說明
 
 - Vite `base` 設為 `/cherry_protfolio/`（對應 repo 名稱）
 - `build` 會執行 `cp dist/index.html dist/404.html`，讓 GitHub Pages 深連結可回到 SPA
-- `npm run deploy` 使用 `gh-pages` 推送 `dist`
+- 推送至 `main`（或於 Actions 手動觸發）會執行 `.github/workflows/deploy.yml` 自動建置並部署
+- Repo 設定：Settings → Pages → Build and deployment → Source 選 **GitHub Actions**
+- Contact 表單：於 Settings → Secrets and variables → Actions 新增
+  - `VITE_EMAILJS_SERVICE_ID`
+  - `VITE_EMAILJS_TEMPLATE_ID`
+  - `VITE_EMAILJS_PUBLIC_KEY`
 
 ## 授權
 
