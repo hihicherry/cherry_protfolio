@@ -10,7 +10,7 @@
 - **About**：自我介紹、依分類上色的技能 chips、彩蛋互動
 - **Projects**：專案卡片（Demo／Source）、技術標籤
 - **Contact**：EmailJS 聯絡表單（送出狀態、錯誤提示）
-- 全站共用粒子／愛心特效（`usePageEffects`）
+- 全站共用粒子／愛心特效（`usePageEffects`）；支援 `prefers-reduced-motion` 減少動態
 - GitHub Pages SPA：Router `basename` 對齊 Vite `base`，build 時複製 `404.html` 支援深連結重整
 
 ## 技術棧
@@ -34,7 +34,7 @@ src/
   pages/          # Home、About、Projects、Contact
   components/     # PixelWindow、NavBar、PageParticles、PageHearts…
   contexts/       # ThemeContext（TS）
-  hooks/          # usePageEffects
+  hooks/          # usePageEffects、usePrefersReducedMotion
 ```
 
 ## 開始使用

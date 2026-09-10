@@ -8,7 +8,7 @@ import { skillCategories } from "../data/skills";
 import { usePageEffects } from "../hooks/usePageEffects";
 
 function About() {
-	const { hearts, removeHeart, spawnFireworkHearts, styles } =
+	const { hearts, removeHeart, spawnFireworkHearts, styles, prefersReducedMotion } =
 		usePageEffects();
 	const skillsSectionRef = useRef(null);
 	const [showEasterEgg, setShowEasterEgg] = useState(false);
@@ -105,23 +105,31 @@ function About() {
 					</ul>
 					<div className="flex flex-wrap gap-2">
 						{skillChips.map(
-							({ skill, categoryId, chipClass }, index) => (
-								<span
-									key={`${categoryId}-${skill}`}
-									className={`font-cubic text-xs px-2 py-1 border-2 rounded-sm transition-colors ${chipClass} ${
-										animateSkills
-											? "animate-skill-chip"
-											: "opacity-0"
-									}`}
-									style={{
-										animationDelay: animateSkills
-											? `${index * 60}ms`
-											: undefined,
-									}}
-								>
-									{skill}
-								</span>
-							),
+							({ skill, categoryId, chipClass }, index) => {
+								const showSkills =
+									prefersReducedMotion || animateSkills;
+
+								return (
+									<span
+										key={`${categoryId}-${skill}`}
+										className={`font-cubic text-xs px-2 py-1 border-2 rounded-sm transition-colors ${chipClass} ${
+											showSkills
+												? prefersReducedMotion
+													? ""
+													: "animate-skill-chip"
+												: "opacity-0"
+										}`}
+										style={{
+											animationDelay:
+												showSkills && !prefersReducedMotion
+													? `${index * 60}ms`
+													: undefined,
+										}}
+									>
+										{skill}
+									</span>
+								);
+							},
 						)}
 					</div>
 				</div>
