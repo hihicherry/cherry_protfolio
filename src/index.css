@@ -369,3 +369,55 @@ button:focus-visible {
 	outline: 2px solid #ff99cc; /* retro-pink */
 	outline-offset: 2px;
 }
+
+/* 減少動態：尊重系統 prefers-reduced-motion（WCAG 2.2） */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		transition-delay: 0s !important;
+		scroll-behavior: auto !important;
+	}
+
+	body {
+		animation: none !important;
+	}
+
+	.particle,
+	.trail {
+		display: none !important;
+	}
+
+	.typing-effect {
+		animation: none !important;
+		width: auto !important;
+		max-width: 100%;
+		white-space: normal;
+		border-right-width: 0 !important;
+		overflow: visible;
+	}
+
+	.animate-skill-chip {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	.heart,
+	.firework-heart,
+	.envelope {
+		display: none !important;
+	}
+
+	.animate-flicker,
+	.hover\:animate-flicker:hover,
+	.animate-pulse,
+	.animate-expand,
+	.animate-shrink,
+	.animate-retro-progress,
+	.animate-retro-progress::after {
+		animation: none !important;
+	}
+}

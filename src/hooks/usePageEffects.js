@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
+import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
 const TRAIL_INTERVAL_MS = 80;
 const HEART_INTERVAL_MS = 200;
@@ -10,9 +11,11 @@ const DEFAULT_TRAIL_COLOR = "#ff99cc";
 /**
  * 全站共用的頁面特效：主題 body class、滑鼠軌跡、點擊愛心。
  * 另提供 addHearts / spawnFireworkHearts 供彩蛋與表單成功動畫使用。
+ * 當系統偏好減少動態時，會關閉裝飾性軌跡／愛心／煙火。
  */
 export function usePageEffects() {
 	const { theme, themeStyles } = useTheme();
+	const prefersReducedMotion = usePrefersReducedMotion();
 	const lastTrailTime = useRef(0);
 	const lastHeartTime = useRef(0);
 	const [hearts, setHearts] = useState([]);
@@ -25,6 +28,8 @@ export function usePageEffects() {
 	}, [theme]);
 
 	useEffect(() => {
+		if (prefersReducedMotion) return undefined;
+
 		const trails = [];
 
 		const handleMouseMove = (e) => {
@@ -58,9 +63,11 @@ export function usePageEffects() {
 			trails.forEach((trail) => trail.remove());
 			trails.length = 0;
 		};
-	}, [trailColor]);
+	}, [trailColor, prefersReducedMotion]);
 
 	useEffect(() => {
+		if (prefersReducedMotion) return undefined;
+
 		const isInteractiveTarget = (target) => {
 			if (!(target instanceof Element)) return false;
 			return Boolean(
@@ -95,17 +102,29 @@ export function usePageEffects() {
 			document.removeEventListener("click", handleClickOrTouch);
 			document.removeEventListener("touchstart", handleClickOrTouch);
 		};
-	}, [trailColor]);
+	}, [trailColor, prefersReducedMotion]);
+
+	useEffect(() => {
+		if (prefersReducedMotion) {
+			setHearts([]);
+		}
+	}, [prefersReducedMotion]);
 
 	const removeHeart = useCallback((id) => {
 		setHearts((prev) => prev.filter((heart) => heart.id !== id));
 	}, []);
 
-	const addHearts = useCallback((nextHearts) => {
-		setHearts((prev) => [...prev, ...nextHearts]);
-	}, []);
+	const addHearts = useCallback(
+		(nextHearts) => {
+			if (prefersReducedMotion) return;
+			setHearts((prev) => [...prev, ...nextHearts]);
+		},
+		[prefersReducedMotion],
+	);
 
 	const spawnFireworkHearts = useCallback(() => {
+		if (prefersReducedMotion) return;
+
 		const centerX = window.innerWidth / 2;
 		const centerY = window.innerHeight / 2;
 		const heartCount = 12;
@@ -129,7 +148,7 @@ export function usePageEffects() {
 		}
 
 		setHearts((prev) => [...prev, ...batch]);
-	}, [trailColor]);
+	}, [trailColor, prefersReducedMotion]);
 
 	return {
 		hearts,
@@ -139,5 +158,6 @@ export function usePageEffects() {
 		styles,
 		theme,
 		trailColor,
+		prefersReducedMotion,
 	};
 }

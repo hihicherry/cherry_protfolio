@@ -8,7 +8,7 @@ import { usePageEffects } from "../hooks/usePageEffects";
 import emailjs from "@emailjs/browser";
 
 function Contact() {
-	const { hearts, removeHeart, addHearts, styles, trailColor } =
+	const { hearts, removeHeart, addHearts, styles, trailColor, prefersReducedMotion } =
 		usePageEffects();
 	const [formData, setFormData] = useState({
 		name: "",
@@ -86,6 +86,8 @@ function Contact() {
 				setSubmitted(true);
 				setFormData({ name: "", email: "", message: "" });
 				setTimeout(() => setSubmitted(false), 3000);
+
+				if (prefersReducedMotion) return;
 
 				const x = window.innerWidth / 2;
 				const y = window.innerHeight / 2;
